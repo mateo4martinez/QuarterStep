@@ -1,9 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/bluegreen"
     tools:context=".activities.SignupActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <TextView
+        android:id="@+id/tvSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:text="Sign up"
+        android:textColor="@color/white"
+        android:textSize="35dp" />
+
+    <EditText
+        android:id="@+id/etFirstname"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSignup"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="4dp"
+        android:textSize="20dp"
+        android:hint="First Name"
+        android:background="@color/white" />
+
+    <EditText
+        android:id="@+id/etLastname"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etFirstname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="4dp"
+        android:textSize="20dp"
+        android:hint="Last Name"
+        android:background="@color/white" />
+
+    <EditText
+        android:id="@+id/etUsername"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etLastname"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="4dp"
+        android:textSize="20dp"
+        android:hint="Username"
+        android:background="@color/white" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etUsername"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="4dp"
+        android:textSize="20dp"
+        android:hint="Password"
+        android:background="@color/white" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etPassword"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:paddingStart="5dp"
+        android:paddingBottom="4dp"
+        android:textSize="20dp"
+        android:hint="E-mail"
+        android:background="@color/white" />
+
+    <Button
+        android:id="@+id/btnSignup"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/etEmail"
+        android:layout_alignStart="@+id/etFirstname"
+        android:layout_alignEnd="@id/etFirstname"
+        android:layout_marginTop="20dp"
+        android:text="Sign up"
+        android:textColor="@color/white"
+        android:textSize="15dp"
+        android:backgroundTint="@color/aqua" />
+
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="wrap_content"
+        android:layout_height="60dp"
+        android:layout_below="@+id/btnSignup"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:text="Go back"
+        android:textColor="@color/white"
+        android:textSize="12dp"
+        android:backgroundTint="@color/orange"/>
+
+</RelativeLayout>
