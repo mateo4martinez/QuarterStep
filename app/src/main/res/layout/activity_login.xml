@@ -25,8 +25,9 @@
         android:layout_marginTop="20dp"
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
+        android:textSize="20dp"
         android:background="@color/white"
-        android:hint="username"/>
+        android:hint="Username"/>
 
     <EditText
         android:id="@+id/etPassword"
@@ -37,8 +38,9 @@
         android:layout_marginTop="10dp"
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
+        android:textSize="20dp"
         android:background="@color/white"
-        android:hint="password" />
+        android:hint="Password" />
 
     <Button
         android:id="@+id/btnLogin"
@@ -49,6 +51,7 @@
         android:layout_alignEnd="@id/etPassword"
         android:layout_marginTop="10dp"
         android:text="Login"
+        android:textSize="15dp"
         android:textColor="@color/white"
         android:backgroundTint="@color/orange" />
 
@@ -62,6 +65,7 @@
         android:layout_marginTop="10dp"
         android:text="Sign up"
         android:textColor="@color/white"
+        android:textSize="15dp"
         android:backgroundTint="@color/aqua" />
 
 
