@@ -28,6 +28,8 @@
         android:paddingBottom="4dp"
         android:textSize="20dp"
         android:hint="First Name"
+        android:inputType="text"
+        android:maxLines="1"
         android:background="@color/white" />
 
     <EditText
@@ -41,6 +43,8 @@
         android:paddingBottom="4dp"
         android:textSize="20dp"
         android:hint="Last Name"
+        android:inputType="text"
+        android:maxLines="1"
         android:background="@color/white" />
 
     <EditText
@@ -53,7 +57,9 @@
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
         android:textSize="20dp"
-        android:hint="Username"
+        android:hint="username"
+        android:inputType="text"
+        android:maxLines="1"
         android:background="@color/white" />
 
     <EditText
@@ -66,7 +72,9 @@
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
         android:textSize="20dp"
-        android:hint="Password"
+        android:hint="password"
+        android:inputType="textPassword"
+        android:maxLines="1"
         android:background="@color/white" />
 
     <EditText
@@ -79,7 +87,9 @@
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
         android:textSize="20dp"
-        android:hint="Email"
+        android:hint="email"
+        android:inputType="text"
+        android:maxLines="1"
         android:background="@color/white" />
 
     <Button
