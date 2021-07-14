@@ -2,6 +2,7 @@ package com.codepath.quarterstep.models;
 
 import android.util.Log;
 
+import com.codepath.quarterstep.User;
 import com.parse.ParseClassName;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -17,11 +18,11 @@ public class Post extends ParseObject{
     public static final String KEY_IMAGE = "image";
     public static final String KEY_SONG = "song";
 
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    public User getUser() {
+        return new User(getParseUser(KEY_USER));
     }
 
-    public void setUser(ParseUser user) {
+    public void setUser(User user) {
         put(KEY_USER, user);
     }
 
