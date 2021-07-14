@@ -30,4 +30,13 @@
     <color name="grey_inactive">#e0e0e0</color>
 
     <color name="default_inactive">#78909c</color>
+
+    <color name="red_bg_light">#ffebee</color>
+    <color name="purple_bg_light">#f3e5f5</color>
+    <color name="blue_bg_light">#e3f2fd</color>
+    <color name="green_bg_light">#e8f5e9</color>
+    <color name="blue_grey_bg_light">#eceff1</color>
+    <color name="yellow_bg_light">#fffde7</color>
+    <color name="orange_bg_light">#fff3e0</color>
+    <color name="grey_bg_light">#fafafa</color>
 </resources>

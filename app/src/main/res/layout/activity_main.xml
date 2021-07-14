@@ -31,18 +31,35 @@
             android:id="@+id/itemArrangment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:bt_active="true"
+            app:bt_colorActive="@color/red_active"
+            app:bt_colorInactive="@color/red_inactive"
+            app:bt_icon="@drawable/ic_baseline_music_note_24"
+            app:bt_shape="@drawable/transition_background_arrangement"
+            app:bt_title="@string/arrangement"
             />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/itemFeed"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:bt_badgeBackgroundColor="@color/green_active"
+            app:bt_colorActive="@color/blue_active"
+            app:bt_colorInactive="@color/blue_inactive"
+            app:bt_icon="@drawable/ic_baseline_home_24"
+            app:bt_shape="@drawable/transition_background_home"
+            app:bt_title="@string/home"
             />
 
         <com.gauravk.bubblenavigation.BubbleToggleView
             android:id="@+id/itemProfile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            app:bt_colorActive="@color/green_active"
+            app:bt_colorInactive="@color/green_inactive"
+            app:bt_icon="@drawable/ic_baseline_person_24"
+            app:bt_shape="@drawable/transition_background_profile"
+            app:bt_title="@string/profile"
             />
 
     </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
