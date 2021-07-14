@@ -11,7 +11,6 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
-import com.codepath.quarterstep.User;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
 import com.parse.ParseUser;
@@ -20,6 +19,8 @@ import com.parse.SignUpCallback;
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "SignupActivity";
+    public static final String KEY_FIRST = "firstName";
+    public static final String KEY_LAST = "lastName";
 
     private EditText etFirstName;
     private EditText etLastName;
@@ -53,13 +54,20 @@ public class SignupActivity extends AppCompatActivity {
                 signupUser(firstName, lastName, username, password, email);
             }
         });
+
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     private void signupUser(String firstName, String lastName, String username, String password, String email) {
-        User user = new User(new ParseUser());
+        ParseUser user = new ParseUser();
 
-        user.setFirstName(firstName);
-        user.setLastName(lastName);
+        user.put(KEY_FIRST, firstName);
+        user.put(KEY_LAST, lastName);
         user.setUsername(username);
         user.setPassword(password);
         user.setEmail(email);
