@@ -3,15 +3,94 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/green_active"
-    tools:context=".activities.MainActivity">
+    android:background="@color/darkBluegreen"
+    tools:context=".fragments.ProfileFragment">
 
     <TextView
+        android:id="@+id/tvProfileTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="My Profile"
+        android:textSize="40dp"
+        android:textColor="@color/orange"
+        android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Profile Fragment"/>
+        android:layout_marginTop="40dp"
+        />
+
+    <TextView
+        android:id="@+id/tvUsernameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvProfileTitle"
+        android:layout_marginStart="40dp"
+        android:layout_marginTop="10dp"
+        android:text="Username"
+        android:textColor="@color/aqua"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvUsername"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsernameTitle"
+        android:layout_alignStart="@+id/tvUsernameTitle"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
+        android:text="hubba bubba"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvNameTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvUsername"
+        android:layout_alignStart="@+id/tvUsernameTitle"
+        android:layout_marginTop="10dp"
+        android:text="Name"
+        android:textColor="@color/aqua"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvNameTitle"
+        android:layout_alignStart="@+id/tvUsernameTitle"
+        android:layout_marginTop="10dp"
+        android:paddingBottom="15dp"
+        android:text="Bron Bron"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvEmailTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvName"
+        android:layout_alignStart="@+id/tvUsernameTitle"
+        android:layout_marginTop="10dp"
+        android:text="Email"
+        android:textColor="@color/aqua"
+        android:textSize="25dp"
+        />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmailTitle"
+        android:layout_alignStart="@+id/tvUsernameTitle"
+        android:layout_marginTop="10dp"
+        android:text="myEmail@mail.com"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        />
 
     <Button
         android:id="@+id/btnLogout"
