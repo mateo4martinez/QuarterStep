@@ -12,17 +12,6 @@
         android:layout_height="match_parent"
         android:layout_above="@+id/bottomNavigationBar"
         />
-
-    <Button
-        android:id="@+id/btnLogout"
-        android:layout_width="100dp"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="80dp"
-        android:text="Logout"
-        android:textSize="15dp"
-        android:backgroundTint="@color/orange"/>
     
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/viewPager"
