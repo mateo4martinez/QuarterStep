@@ -17,4 +17,34 @@
         android:textSize="15dp"
         android:backgroundTint="@color/orange"/>
 
+    <com.gauravk.bubblenavigation.BubbleNavigationLinearView
+        android:id="@+id/bottomNavigationBar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:elevation="8dp"
+        android:layout_alignParentBottom="true"
+        android:padding="12dp">
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itemArrangment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itemFeed"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <com.gauravk.bubblenavigation.BubbleToggleView
+            android:id="@+id/itemProfile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+    </com.gauravk.bubblenavigation.BubbleNavigationLinearView>
+
 </RelativeLayout>
