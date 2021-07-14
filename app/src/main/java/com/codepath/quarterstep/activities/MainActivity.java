@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.codepath.quarterstep.R;
-import com.codepath.quarterstep.fragments.ArrangmentFragment;
+import com.codepath.quarterstep.fragments.ArrangementFragment;
 import com.codepath.quarterstep.fragments.FeedFragment;
 import com.codepath.quarterstep.fragments.ProfileFragment;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
@@ -54,9 +54,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void setUpNavigation() {
         ArrayList<ScreenSlidePageFragment> fragments = new ArrayList<>();
-        fragments.add(ScreenSlidePageFragment.newInstance(getString(R.string.arrangement), R.color.red_inactive));
-        fragments.add(ScreenSlidePageFragment.newInstance(getString(R.string.home), R.color.blue_inactive));
-        fragments.add(ScreenSlidePageFragment.newInstance(getString(R.string.profile), R.color.green_inactive));
+        fragments.add(new ArrangementFragment());
+        fragments.add(new FeedFragment());
+        fragments.add(new ProfileFragment());
 
         ScreenSlidePagerAdapter pagerAdapter = new ScreenSlidePagerAdapter(fragments, fragmentManager);
 
@@ -71,22 +71,6 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onPageSelected(int position) {
-                Fragment fragment;
-                switch (position) {
-                    case 0:
-                        fragment = new ArrangmentFragment();
-                        break;
-                    case 1:
-                        fragment = new FeedFragment();
-                        break;
-                    case 2:
-                        fragment = new ProfileFragment();
-                        break;
-                    default:
-                        fragment = new ArrangmentFragment();
-                        break;
-                }
-                fragmentManager.beginTransaction().replace(R.id.flContainer, fragment).commit();
                 bubbleNavigationLinearView.setCurrentActiveItem(position);
             }
 
@@ -104,6 +88,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Set default view
-        fragmentManager.beginTransaction().replace(R.id.flContainer, new ArrangmentFragment()).commit();
+        fragmentManager.beginTransaction().replace(R.id.flContainer, new ArrangementFragment()).commit();
     }
 }

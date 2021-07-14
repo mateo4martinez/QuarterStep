@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link ArrangmentFragment#newInstance} factory method to
+ * Use the {@link ArrangementFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ArrangmentFragment extends Fragment {
+public class ArrangementFragment extends ScreenSlidePageFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -26,7 +27,7 @@ public class ArrangmentFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public ArrangmentFragment() {
+    public ArrangementFragment() {
         // Required empty public constructor
     }
 
@@ -39,8 +40,8 @@ public class ArrangmentFragment extends Fragment {
      * @return A new instance of fragment ArrangmentFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ArrangmentFragment newInstance(String param1, String param2) {
-        ArrangmentFragment fragment = new ArrangmentFragment();
+    public static ArrangementFragment newInstance(String param1, String param2) {
+        ArrangementFragment fragment = new ArrangementFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
