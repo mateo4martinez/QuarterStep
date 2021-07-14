@@ -16,6 +16,16 @@
         android:text="Logout"
         android:textSize="15dp"
         android:backgroundTint="@color/orange"/>
+    
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/viewPager"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_alignBottom="@+id/bottomNavigationBar"
+        android:layout_alignTop="@+id/bottomNavigationBar"
+        android:layout_alignStart="@+id/bottomNavigationBar"
+        android:layout_alignEnd="@+id/bottomNavigationBar"
+        />
 
     <com.gauravk.bubblenavigation.BubbleNavigationLinearView
         android:id="@+id/bottomNavigationBar"
