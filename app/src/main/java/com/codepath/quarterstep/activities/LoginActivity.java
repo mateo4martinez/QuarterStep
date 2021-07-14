@@ -43,7 +43,7 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
-                String password = etUsername.getText().toString();
+                String password = etPassword.getText().toString();
                 loginUser(username, password);
             }
         });
@@ -60,12 +60,14 @@ public class LoginActivity extends AppCompatActivity {
         ParseUser.logInInBackground(username, password, new LogInCallback() {
             @Override
             public void done(ParseUser user, ParseException e) {
-                if (e != null) {
+                if (user != null) {
+                    goMainActivity();
+                }
+                else {
                     Log.e(TAG, "Issue with login", e);
                     Toast.makeText(LoginActivity.this, "Issue with login.", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                goMainActivity();
             }
         });
     }
