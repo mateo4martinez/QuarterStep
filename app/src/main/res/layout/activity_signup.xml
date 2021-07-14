@@ -18,7 +18,7 @@
         android:textSize="35dp" />
 
     <EditText
-        android:id="@+id/etFirstname"
+        android:id="@+id/etFirstName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvSignup"
@@ -31,10 +31,10 @@
         android:background="@color/white" />
 
     <EditText
-        android:id="@+id/etLastname"
+        android:id="@+id/etLastName"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etFirstname"
+        android:layout_below="@+id/etFirstName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:paddingStart="5dp"
@@ -47,7 +47,7 @@
         android:id="@+id/etUsername"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etLastname"
+        android:layout_below="@+id/etLastName"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:paddingStart="5dp"
@@ -79,7 +79,7 @@
         android:paddingStart="5dp"
         android:paddingBottom="4dp"
         android:textSize="20dp"
-        android:hint="E-mail"
+        android:hint="Email"
         android:background="@color/white" />
 
     <Button
@@ -87,8 +87,8 @@
         android:layout_width="wrap_content"
         android:layout_height="60dp"
         android:layout_below="@+id/etEmail"
-        android:layout_alignStart="@+id/etFirstname"
-        android:layout_alignEnd="@id/etFirstname"
+        android:layout_alignStart="@+id/etFirstName"
+        android:layout_alignEnd="@id/etFirstName"
         android:layout_marginTop="20dp"
         android:text="Sign up"
         android:textColor="@color/white"
