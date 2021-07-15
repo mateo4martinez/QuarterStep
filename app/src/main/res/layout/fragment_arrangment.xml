@@ -3,14 +3,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/red_active"
     tools:context=".fragments.ArrangementFragment">
 
-    <TextView
-        android:layout_width="wrap_content"
+    <GridView
+        android:id="@+id/gvNoteNames"
+        android:layout_width="60dp"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:text="Arrangment Fragment"/>
+        android:columnWidth="60dp"
+        android:gravity="center"
+        android:numColumns="1"
+        android:stretchMode="columnWidth"
+        />
+
+    <GridView
+        android:id="@+id/gvNotes"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@+id/gvNoteNames"
+        android:columnWidth="60dp"
+        android:gravity="center"
+        android:stretchMode="columnWidth"
+        />
 
 </RelativeLayout>

@@ -12,7 +12,6 @@
         android:layout_alignParentStart="true"
         android:layout_marginTop="10dp"
         android:layout_marginStart="5dp"
-        android:layout_marginBottom="5dp"
         android:src="@drawable/default_icon"
         />
 
@@ -67,6 +66,20 @@
         android:layout_marginTop="5dp"
         android:text="Sounds like: "
         android:textColor="@color/orange_active"
+        />
+
+    <TextView
+        android:id="@+id/tvSongName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/ibPlay"
+        android:layout_alignEnd="@+id/ibPlay"
+        android:layout_below="@id/ibPlay"
+        android:text="myName"
+        android:gravity="center"
+        android:textColor="@color/orange_active"
+        android:layout_marginStart="5dp"
+        android:layout_marginBottom="5dp"
         />
 
 </RelativeLayout>
