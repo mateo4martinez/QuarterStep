@@ -72,8 +72,5 @@ public class MainActivity extends AppCompatActivity {
                 viewPager.setCurrentItem(position, true);
             }
         });
-
-        // Set default view
-        fragmentManager.beginTransaction().replace(R.id.flContainer, new ArrangementFragment()).commit();
     }
 }

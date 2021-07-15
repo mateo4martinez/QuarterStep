@@ -1,9 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/darkBluegreen"
     tools:context=".activities.ShareActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <ImageView
+        android:id="@+id/ivImage"
+        android:layout_width="200dp"
+        android:layout_height="125dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="30dp"
+        tools:srcCompat="@tools:sample/avatars"
+        />
+
+    <ImageButton
+        android:id="@+id/ibPlay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/ivImage"
+        android:layout_alignStart="@+id/ivImage"
+        android:layout_alignEnd="@+id/ivImage"
+        android:layout_alignBottom="@+id/ivImage"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="15dp"
+        android:src="@drawable/default_icon"
+        />
+
+    <TextView
+        android:id="@+id/tvSongName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/ivImage"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="Name"
+        android:textColor="@color/orange_active"
+        android:textSize="30dp"
+        />
+
+    <TextView
+        android:id="@+id/tvCreatedAt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvSongName"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="2dp"
+        android:text="Created at"
+        android:textColor="@color/default_inactive"
+        android:textSize="15dp"
+        />
+
+    <TextView
+        android:id="@+id/tvSoundsLike"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvCreatedAt"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="8dp"
+        android:text="Sounds Like:"
+        android:textColor="@color/white"
+        android:textSize="20dp"
+        />
+
+    <EditText
+        android:id="@+id/etCharacteristics"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:layout_toEndOf="@+id/tvSoundsLike"
+        android:layout_below="@+id/tvCreatedAt"
+        android:layout_alignTop="@+id/tvSoundsLike"
+        android:layout_marginStart="5dp"
+        android:background="@color/white"
+        android:gravity="start|top"
+        android:hint="Rock, Classical, ..."
+        android:minLines="2"
+        android:maxLines="2"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:inputType="textMultiLine"
+        />
+
+    <EditText
+        android:id="@+id/etCaption"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etCharacteristics"
+        android:layout_alignStart="@+id/tvSoundsLike"
+        android:layout_alignEnd="@+id/etCharacteristics"
+        android:layout_marginTop="20dp"
+        android:minLines="6"
+        android:maxLines="6"
+        android:background="@color/white"
+        android:gravity="start|top"
+        android:paddingStart="3dp"
+        android:paddingEnd="3dp"
+        android:inputType="textMultiLine"
+        android:hint="Write a caption..."
+        />
+
+    <Button
+        android:id="@+id/btnFavorite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/etCaption"
+        android:layout_alignStart="@+id/etCaption"
+        android:layout_alignEnd="@+id/etCaption"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginTop="20dp"
+        android:paddingBottom="10dp"
+        android:backgroundTint="@color/orange_active"
+        android:gravity="center"
+        android:text="Add to Favorites"
+        android:textSize="18dp"
+        />
+
+    <Button
+        android:id="@+id/btnShare"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btnFavorite"
+        android:layout_alignStart="@+id/btnFavorite"
+        android:layout_alignEnd="@id/btnFavorite"
+        android:layout_marginTop="3dp"
+        android:backgroundTint="@color/aqua"
+        android:gravity="center"
+        android:text="Share"
+        android:textSize="18dp"
+        />
+
+</RelativeLayout>
