@@ -21,6 +21,7 @@ import com.parse.ParseUser;
 import org.jetbrains.annotations.NotNull;
 
 public class ProfileFragment extends ScreenSlidePageFragment {
+    public static final String TAG = "ProfileFragment";
 
     private Button btnLogout;
 
@@ -31,7 +32,6 @@ public class ProfileFragment extends ScreenSlidePageFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        super.onCreateView(inflater, container, savedInstanceState);
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_profile, container, false);
     }

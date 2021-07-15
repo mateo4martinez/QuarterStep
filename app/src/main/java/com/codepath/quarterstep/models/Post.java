@@ -16,6 +16,8 @@ public class Post extends ParseObject{
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_IMAGE = "image";
     public static final String KEY_SONG = "song";
+    public static final String KEY_CHARACTERISTICS = "characteristics";
+    public static final String KEY_CREATED = "createdAt";
 
     public ParseUser getUser() {
         return getParseUser(KEY_USER);
@@ -47,6 +49,14 @@ public class Post extends ParseObject{
 
     public void setSong(ParseFile song) {
         put(KEY_SONG, song);
+    }
+
+    public String getCharacteristics() {
+        return "Sounds like: " + getString(KEY_CHARACTERISTICS);
+    }
+
+    public void setCharacteristics(String characteristics) {
+        put(KEY_CHARACTERISTICS, characteristics);
     }
 
     public static String calculateTimeAgo(Date createdAt) {
