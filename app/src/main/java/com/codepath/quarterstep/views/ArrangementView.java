@@ -18,10 +18,6 @@ public class ArrangementView extends GridView {
         super(context, attrs, defStyleAttr);
     }
 
-    public ArrangementView(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
-        super(context, attrs, defStyleAttr, defStyleRes);
-    }
-
     public View getViewByPosition(int position) {
         int firstPosition = this.getFirstVisiblePosition();
         int lastPosition = this.getLastVisiblePosition();
