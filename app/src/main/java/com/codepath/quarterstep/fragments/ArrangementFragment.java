@@ -1,61 +1,35 @@
 package com.codepath.quarterstep.fragments;
 
+import android.content.Context;
+import android.media.AudioManager;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ArrangementFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import org.jetbrains.annotations.NotNull;
+
 public class ArrangementFragment extends ScreenSlidePageFragment {
+    public static final String TAG = "ArrangementFragment";
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private Button btnPlay;
+    private MediaPlayer mp;
 
     public ArrangementFragment() {
         // Required empty public constructor
-    }
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ArrangmentFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ArrangementFragment newInstance(String param1, String param2) {
-        ArrangementFragment fragment = new ArrangementFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
     }
 
     @Override
@@ -63,5 +37,55 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_arrangment, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btnPlay = view.findViewById(R.id.btnPlay);
+
+        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i(TAG, "Playing now");
+                playSound();
+            }
+        });
+    }
+
+    public void playSound()
+    {
+        mp = MediaPlayer.create(getActivity(), R.raw.c4);
+
+        // Play an alarm ringtone
+        if(mp != null)
+        {
+            Log.d("INFOMESSAGE", "MediaPlayer playing.");
+
+            mp.start();
+        }
+
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                stopSound();
+            }
+        });
+    }
+
+
+    public void stopSound()
+    {
+        if(mp != null && mp.isPlaying())
+        {
+            mp.stop();
+
+            mp.release();
+            mp = null;
+        }
     }
 }
