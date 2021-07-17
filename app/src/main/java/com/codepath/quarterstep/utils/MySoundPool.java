@@ -5,10 +5,10 @@ import android.media.SoundPool;
 
 import com.codepath.quarterstep.R;
 
-public class mySoundPool extends SoundPool {
+public class MySoundPool extends SoundPool {
     private int[] sounds;
 
-    public mySoundPool(int maxStreams, int streamType, int srcQuality) {
+    public MySoundPool(int maxStreams, int streamType, int srcQuality) {
         super(maxStreams, streamType, srcQuality);
     }
 
