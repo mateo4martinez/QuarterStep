@@ -1,14 +1,20 @@
 package com.codepath.quarterstep.models;
 
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 public class Note {
     private String noteName;
-    private RelativeLayout rlNote;
+    private RelativeLayout rlCell;
 
-    public Note(String noteName, RelativeLayout rlNote) {
+    public Note() {
+        this.noteName = null;
+        this.rlCell = null;
+    }
+
+    public Note(String noteName, RelativeLayout rlCell) {
         this.noteName = noteName;
-        this.rlNote = rlNote;
+        this.rlCell = rlCell;
     }
 
     public void setNoteName(String noteName) {
@@ -19,11 +25,11 @@ public class Note {
         return this.noteName;
     }
 
-    public void setLayout(RelativeLayout rlNote) {
-        this.rlNote = rlNote;
+    public void setLayout(RelativeLayout rlCell) {
+        this.rlCell = rlCell;
     }
 
     public RelativeLayout getLayout() {
-        return this.rlNote;
+        return this.rlCell;
     }
 }

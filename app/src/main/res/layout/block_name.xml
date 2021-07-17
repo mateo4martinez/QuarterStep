@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rlCell"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:background="@color/grey_inactive">
+
+    <RelativeLayout
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:background="@drawable/customborder">
+
+        <TextView
+            android:id="@+id/tvName"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:text="C4"
+            android:gravity="center"
+            android:layout_centerInParent="true"
+            />
+
+    </RelativeLayout>
+
+</RelativeLayout>
