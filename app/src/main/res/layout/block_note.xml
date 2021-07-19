@@ -8,7 +8,15 @@
     <RelativeLayout
         android:layout_width="30dp"
         android:layout_height="30dp"
+        android:gravity="center"
         android:background="@drawable/customborder">
+
+        <TextView
+            android:id="@+id/tvNoteName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="C4"
+            />
 
     </RelativeLayout>
 
