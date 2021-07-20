@@ -1,10 +1,5 @@
 # QuarterStep
 
-Original App Design Project - README Template
-===
-
-# QuarterStep
-
 ## Table of Contents
 1. [Overview](#Overview)
 1. [Product Spec](#Product-Spec)
