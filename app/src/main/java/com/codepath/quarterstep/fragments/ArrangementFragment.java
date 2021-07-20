@@ -1,42 +1,34 @@
 package com.codepath.quarterstep.fragments;
 
-import android.content.Context;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.MediaPlayer;
 import android.media.SoundPool;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.adapters.NotesAdapter;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
+import com.codepath.quarterstep.views.ArrangementView;
 
 import org.jetbrains.annotations.NotNull;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class ArrangementFragment extends ScreenSlidePageFragment {
     public static final String TAG = "ArrangementFragment";
 
-    private List<Note> noteNames;
-    private List<Note> allNotes;
-    private Button btnPlay;
+    //private ArrangementView avNames;
+    private ArrangementView avNotes;
+    //private NameBlocksAdapter nameBlocksAdapter;
+    private NotesAdapter notesAdapter;
+    private List<List<Note>> grid;
     private SoundPool soundPool;
-    private int sound1, sound2, sound3;
-    private boolean isLoaded;
 
     public ArrangementFragment() {
         // Required empty public constructor
@@ -53,44 +45,43 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        btnPlay = view.findViewById(R.id.btnPlay);
+        //avNames = view.findViewById(R.id.avNames);
+        avNotes = view.findViewById(R.id.avNotes);
 
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build();
+        avNotes.generateGrid();
+        grid = avNotes.getGrid();
 
-        soundPool = new SoundPool.Builder()
-                .setMaxStreams(3)
-                .setAudioAttributes(audioAttributes)
-                .build();
+        //nameBlocksAdapter = new NameBlocksAdapter(getActivity(), Constants.NAME_BLOCKS);
+        notesAdapter = new NotesAdapter(getActivity(), grid);
 
-        Log.i(TAG, "loading");
-        sound1 = soundPool.load(getActivity(), R.raw.c4, 1);
-        sound2 = soundPool.load(getActivity(), R.raw.e4, 1);
-        sound3 = soundPool.load(getActivity(), R.raw.g4, 1);
-        Log.i(TAG, "loaded");
+        //avNames.setAdapter(nameBlocksAdapter);
+        avNotes.setAdapter(notesAdapter);
+//
+//        avNames.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return event.getAction() == MotionEvent.ACTION_MOVE;
+//            }
+//        });
+//
+//        avNotes.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return event.getAction() == MotionEvent.ACTION_MOVE;
+//            }
+//        });
 
-        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+//        AudioAttributes audioAttributes = new AudioAttributes.Builder()
+//                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+//                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+//                .build();
+//
+//        soundPool = new SoundPool.Builder()
+//                .setMaxStreams(3)
+//                .setAudioAttributes(audioAttributes)
+//                .build();
 
-        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                isLoaded = true;
-            }
-        });
-
-        btnPlay.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (isLoaded) {
-                    soundPool.play(sound1, 1, 1, 0, 0, 1);
-                    soundPool.play(sound2, 1, 1, 0, 0, 1);
-                    soundPool.play(sound3, 1, 1, 0, 0, 1);
-                    Log.i(TAG, "playing");
-                }
-            }
-        });
+//        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
+//        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
     }
 }

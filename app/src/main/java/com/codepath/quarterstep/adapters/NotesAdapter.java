@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import androidx.core.content.ContextCompat;
+
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.utils.Constants;
@@ -42,6 +44,16 @@ public class NotesAdapter extends BaseAdapter {
     }
 
     @Override
+    public int getViewTypeCount() {
+        return getCount();
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
+    }
+
+    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         Note note = notes.get(position);
 
@@ -54,7 +66,10 @@ public class NotesAdapter extends BaseAdapter {
         TextView tvNoteName = convertView.findViewById(R.id.tvNoteName);
 
         note.setLayout(rlCell);
-        tvNoteName.setText(note.getNoteName());
+        if (note.getCol() == 0) {
+            tvNoteName.setText(note.getNoteName());
+            rlCell.setBackgroundColor(ContextCompat.getColor(context, R.color.grey_inactive));
+        }
 
         return convertView;
     }

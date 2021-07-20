@@ -1,11 +1,7 @@
 package com.codepath.quarterstep.utils;
 
 import com.codepath.quarterstep.R;
-import com.codepath.quarterstep.models.NameBlock;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Map;
 import static java.util.Map.entry;
 
@@ -19,68 +15,31 @@ public class Constants {
     // Note Names
         // Octave 4
         public static final String C4 = "C4";
-        public static final String C_4 = "C_4";
+        public static final String C_4 = "C#4";
         public static final String D4 = "D4";
-        public static final String D_4 = "D_4";
+        public static final String D_4 = "D#4";
         public static final String E4 = "E4";
         public static final String F4 = "F4";
-        public static final String F_4 = "F_4";
+        public static final String F_4 = "F#4";
         public static final String G4 = "G4";
-        public static final String G_4 = "G_4";
+        public static final String G_4 = "G#4";
         public static final String A4 = "A4";
-        public static final String A_4 = "A_4";
+        public static final String A_4 = "A#4";
         public static final String B4 = "B4";
 
         // Octave 5
         public static final String C5 = "C5";
-        public static final String C_5 = "C_5";
+        public static final String C_5 = "C#5";
         public static final String D5 = "D5";
-        public static final String D_5 = "D_5";
+        public static final String D_5 = "D#5";
         public static final String E5 = "E5";
         public static final String F5 = "F5";
-        public static final String F_5 = "F_5";
+        public static final String F_5 = "F#5";
         public static final String G5 = "G5";
-        public static final String G_5 = "G_5";
+        public static final String G_5 = "G#5";
         public static final String A5 = "A5";
-        public static final String A_5 = "A_5";
+        public static final String A_5 = "A#5";
         public static final String B5 = "B5";
-
-    // Name Blocks
-        // Octave 4
-        public static final NameBlock C4_BLOCK = new NameBlock(C4);
-        public static final NameBlock C_4_BLOCK = new NameBlock(C_4);
-        public static final NameBlock D4_BLOCK = new NameBlock(D4);
-        public static final NameBlock D_4_BLOCK = new NameBlock(D_4);
-        public static final NameBlock E4_BLOCK = new NameBlock(E4);
-        public static final NameBlock F4_BLOCK = new NameBlock(F4);
-        public static final NameBlock F_4_BLOCK = new NameBlock(F_4);
-        public static final NameBlock G4_BLOCK = new NameBlock(G4);
-        public static final NameBlock G_4_BLOCK = new NameBlock(G_4);
-        public static final NameBlock A4_BLOCK = new NameBlock(A4);
-        public static final NameBlock A_4_BLOCK = new NameBlock(A_4);
-        public static final NameBlock B4_BLOCK = new NameBlock(B4);
-
-        // Octave 5
-        public static final NameBlock C5_BLOCK = new NameBlock(C5);
-        public static final NameBlock C_5_BLOCK = new NameBlock(C_5);
-        public static final NameBlock D5_BLOCK = new NameBlock(D5);
-        public static final NameBlock D_5_BLOCK = new NameBlock(D_5);
-        public static final NameBlock E5_BLOCK = new NameBlock(E5);
-        public static final NameBlock F5_BLOCK = new NameBlock(F5);
-        public static final NameBlock F_5_BLOCK = new NameBlock(F_5);
-        public static final NameBlock G5_BLOCK = new NameBlock(G5);
-        public static final NameBlock G_5_BLOCK = new NameBlock(G_5);
-        public static final NameBlock A5_BLOCK = new NameBlock(A5);
-        public static final NameBlock A_5_BLOCK = new NameBlock(A_5);
-        public static final NameBlock B5_BLOCK = new NameBlock(B5);
-
-    // Name Blocks Array
-        public static final List<NameBlock> NAME_BLOCKS = Arrays.asList(
-                B5_BLOCK, A_5_BLOCK, A5_BLOCK, G_5_BLOCK, G5_BLOCK, F_5_BLOCK, F5_BLOCK, E5_BLOCK,
-                D_5_BLOCK, D5_BLOCK, C_5_BLOCK, C5_BLOCK,
-                B4_BLOCK, A_4_BLOCK, A4_BLOCK, G_4_BLOCK, G4_BLOCK, F_4_BLOCK, F4_BLOCK, E4_BLOCK,
-                D_4_BLOCK, D4_BLOCK, C_4_BLOCK, C4_BLOCK
-                );
 
     // Sounds
         // Sounds Array

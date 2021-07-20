@@ -65,7 +65,7 @@ public class Song {
     }
 
     private List<List<Note>> extractChords(List<List<Note>> rawSong) {
-        List<List<Note>> rawChords = convertToChords(rawSong);
+        List<List<Note>> rawChords = separateColumns(rawSong);
 
         List<List<Note>> extractedChords = new ArrayList<>();
         for (List<Note> rawChord: rawChords) {
@@ -84,15 +84,15 @@ public class Song {
         return chord;
     }
 
-    private List<List<Note>> convertToChords(List<List<Note>> rawSong) {
+    private List<List<Note>> separateColumns(List<List<Note>> rawSong) {
         List<List<Note>> rawChords = new ArrayList<>();
         for (int i = 0; i < Constants.NUM_COLS; i++) {
-            rawChords.add(convertOneChord(i));
+            rawChords.add(separateOneColumn(i));
         }
         return rawChords;
     }
 
-    private List<Note> convertOneChord(int position) {
+    private List<Note> separateOneColumn(int position) {
         List<Note> rawChord = new ArrayList<>();
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             rawChord.add(this.rawSong.get(i).get(position));
