@@ -76,11 +76,11 @@ public class Constants {
 
     // Name Blocks Array
         public static final List<NameBlock> NAME_BLOCKS = Arrays.asList(
-                C4_BLOCK, C_4_BLOCK, D4_BLOCK, D_4_BLOCK, E4_BLOCK, F4_BLOCK, F_4_BLOCK, G4_BLOCK,
-                G_4_BLOCK, A4_BLOCK, A_4_BLOCK, B4_BLOCK,
-                C5_BLOCK, C_5_BLOCK, D5_BLOCK, D_5_BLOCK, E5_BLOCK, F5_BLOCK, F_5_BLOCK, G5_BLOCK,
-                G_5_BLOCK, A5_BLOCK, A_5_BLOCK, B5_BLOCK
-    );
+                B5_BLOCK, A_5_BLOCK, A5_BLOCK, G_5_BLOCK, G5_BLOCK, F_5_BLOCK, F5_BLOCK, E5_BLOCK,
+                D_5_BLOCK, D5_BLOCK, C_5_BLOCK, C5_BLOCK,
+                B4_BLOCK, A_4_BLOCK, A4_BLOCK, G_4_BLOCK, G4_BLOCK, F_4_BLOCK, F4_BLOCK, E4_BLOCK,
+                D_4_BLOCK, D4_BLOCK, C_4_BLOCK, C4_BLOCK
+                );
 
     // Sounds
         // Sounds Array
@@ -150,4 +150,35 @@ public class Constants {
                 entry(A_5, A_5_INDEX),
                 entry(B5, B5_INDEX)
         );
+
+    // Row Map
+    public static final Map<Integer, String> ROW_MAP = Map.ofEntries(
+            // Octave 4
+            entry(NUM_ROWS - 1 - C4_INDEX, C4),
+            entry(NUM_ROWS - 1 - C_4_INDEX, C_4),
+            entry(NUM_ROWS - 1 - D4_INDEX, D4),
+            entry(NUM_ROWS - 1 - D_4_INDEX, D_4),
+            entry(NUM_ROWS - 1 - E4_INDEX, E4),
+            entry(NUM_ROWS - 1 - F4_INDEX, F4),
+            entry(NUM_ROWS - 1 - F_4_INDEX, F_4),
+            entry(NUM_ROWS - 1 - G4_INDEX, G4),
+            entry(NUM_ROWS - 1 - G_4_INDEX, G_4),
+            entry(NUM_ROWS - 1 - A4_INDEX, A4),
+            entry(NUM_ROWS - 1 - A_4_INDEX, A_4),
+            entry(NUM_ROWS - 1 - B4_INDEX, B4),
+
+            // Octave 5
+            entry(NUM_ROWS - 1 - C5_INDEX, C5),
+            entry(NUM_ROWS - 1 - C_5_INDEX, C_5),
+            entry(NUM_ROWS - 1 - D5_INDEX, D5),
+            entry(NUM_ROWS - 1 - D_5_INDEX, D_5),
+            entry(NUM_ROWS - 1 - E5_INDEX, E5),
+            entry(NUM_ROWS - 1 - F5_INDEX, F5),
+            entry(NUM_ROWS - 1 - F_5_INDEX, F_5),
+            entry(NUM_ROWS - 1 - G5_INDEX, G5),
+            entry(NUM_ROWS - 1 - G_5_INDEX, G_5),
+            entry(NUM_ROWS - 1 - A5_INDEX, A5),
+            entry(NUM_ROWS - 1 - A_5_INDEX, A_5),
+            entry(NUM_ROWS - 1 - B5_INDEX, B5)
+    );
 }
