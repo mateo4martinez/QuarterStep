@@ -28,6 +28,10 @@ public class NotesAdapter extends BaseAdapter {
         this.notes = setAdapterPositions(emptyNotes);
     }
 
+    public List<Note> getNotes() {
+        return this.notes;
+    }
+
     @Override
     public int getCount() {
         return notes.size();
