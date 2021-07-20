@@ -10,10 +10,10 @@ import java.util.List;
 
 public class Song {
     private Context context;
-    private String songName;
     private List<List<Note>> rawSong;
     private List<List<Note>> chords;
     private ParseUser user;
+    private String songName;
     private boolean favorite;
 
     public Song(Context context, ParseUser user) {
@@ -21,6 +21,7 @@ public class Song {
         this.user = user;
         this.rawSong = new ArrayList<>();
         this.chords = new ArrayList<>();
+        this.songName = "";
         this.favorite = false;
     }
 
@@ -30,6 +31,14 @@ public class Song {
         this.rawSong = rawSong;
         this.chords = extractChords(rawSong);
         this.favorite = false;
+    }
+
+    public void setSongName(String name) {
+        this.songName = name;
+    }
+
+    public String getSongName() {
+        return this.songName;
     }
 
     public ParseUser getUser() {
