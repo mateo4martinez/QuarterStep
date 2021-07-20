@@ -31,6 +31,11 @@ public class ArrangementView extends GridView {
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             List<Note> row = new ArrayList<>();
             for (int j = 0; j < Constants.NUM_COLS; j++) {
+                Note note = new Note();
+                note.setRow(i);
+                note.setCol(j);
+                note.setNoteName(Constants.ROW_MAP.get(i));
+
                 row.add(new Note());
             }
             this.grid.add(row);
