@@ -69,7 +69,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Note note = adapterArray.get(position);
                 note.selected(getActivity());
-                if (note.isPlayable()) {
+                if (!note.getFlag() && note.isPlayable()) {
                     songPlayer.playOneNote(note.getNoteName());
                 }
 

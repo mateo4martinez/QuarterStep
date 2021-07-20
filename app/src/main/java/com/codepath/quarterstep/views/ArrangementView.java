@@ -34,6 +34,7 @@ public class ArrangementView extends GridView {
             nameBlock.setRow(i);
             nameBlock.setCol(0);
             nameBlock.setNoteName(Constants.ROW_MAP.get(i));
+            nameBlock.triggerFlag(); // Trigger flag so we know it is a name block
             row.add(nameBlock);
             for (int j = 1; j < Constants.NUM_COLS; j++) {
                 Note note = new Note();
@@ -61,23 +62,5 @@ public class ArrangementView extends GridView {
             col.add(this.grid.get(i).get(position));
         }
         return col;
-    }
-
-    public void setNote(int row, int col, Note note) {
-        this.grid.get(row).set(col, note);
-    }
-
-    public void deleteNote(int row, int col) {
-        this.grid.get(row).set(col, new Note());
-    }
-
-    public View getViewByPosition(int position) {
-        int firstPosition = this.getFirstVisiblePosition();
-        int lastPosition = this.getLastVisiblePosition();
-
-        if ((position < firstPosition) || (position > lastPosition))
-            return null;
-
-        return this.getChildAt(position - firstPosition);
     }
 }

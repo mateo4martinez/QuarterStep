@@ -14,6 +14,7 @@ public class Note {
     private String noteName;
     private RelativeLayout rlCell;
     private boolean playable;
+    private boolean isNameBlock;
     private int position; // adapter position
     private int row;
     private int col;
@@ -22,6 +23,7 @@ public class Note {
         this.noteName = null;
         this.rlCell = null;
         this.playable = false;
+        this.isNameBlock = false;
         this.position = 0;
         this.row = 0;
         this.col = 0;
@@ -31,9 +33,18 @@ public class Note {
         this.noteName = noteName;
         this.rlCell = rlCell;
         this.playable = false;
+        this.isNameBlock = false;
         this.position = 0;
         this.row = 0;
         this.col = 0;
+    }
+
+    public void triggerFlag() {
+        this.isNameBlock = true;
+    }
+
+    public boolean getFlag() {
+        return this.isNameBlock;
     }
 
     public void setNoteName(String noteName) {
