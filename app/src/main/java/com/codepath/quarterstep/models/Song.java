@@ -3,6 +3,7 @@ package com.codepath.quarterstep.models;
 import android.content.Context;
 
 import com.codepath.quarterstep.utils.Constants;
+import com.parse.ParseUser;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,20 +13,27 @@ public class Song {
     private String songName;
     private List<List<Note>> rawSong;
     private List<List<Note>> chords;
+    private ParseUser user;
     private boolean favorite;
 
-    public Song(Context context) {
+    public Song(Context context, ParseUser user) {
         this.context = context;
+        this.user = user;
         this.rawSong = new ArrayList<>();
         this.chords = new ArrayList<>();
         this.favorite = false;
     }
 
-    public Song(Context context, List<List<Note>> rawSong) {
+    public Song(Context context, List<List<Note>> rawSong, ParseUser user) {
         this.context = context;
+        this.user = user;
         this.rawSong = rawSong;
         this.chords = extractChords(rawSong);
         this.favorite = false;
+    }
+
+    public ParseUser getUser() {
+        return this.user;
     }
 
     public boolean isFavorite() {
