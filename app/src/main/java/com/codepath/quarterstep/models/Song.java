@@ -30,6 +30,7 @@ public class Song {
         this.user = user;
         this.rawSong = rawSong;
         this.chords = extractChords(rawSong);
+        this.songName = "";
         this.favorite = false;
     }
 
@@ -58,6 +59,11 @@ public class Song {
         return this.chords;
     }
 
+    public void addChord(List<Note> rawChord) {
+        List<Note> chord = extractOneChord(rawChord);
+        this.chords.add(chord);
+    }
+
     private List<List<Note>> extractChords(List<List<Note>> rawSong) {
         List<List<Note>> rawChords = convertToChords(rawSong);
 
@@ -71,7 +77,7 @@ public class Song {
     private List<Note> extractOneChord(List<Note> notes) {
         List<Note> chord = new ArrayList<>();
         for (Note note: notes) {
-            if (note.getNoteName() != null) {
+            if (note.isPlayable()) {
                 chord.add(note);
             }
         }
