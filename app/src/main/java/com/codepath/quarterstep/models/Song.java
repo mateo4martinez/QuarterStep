@@ -86,7 +86,7 @@ public class Song {
 
     private List<List<Note>> separateColumns(List<List<Note>> rawSong) {
         List<List<Note>> rawChords = new ArrayList<>();
-        for (int i = 0; i < Constants.NUM_COLS; i++) {
+        for (int i = 1; i < Constants.NUM_COLS; i++) {
             rawChords.add(separateOneColumn(i));
         }
         return rawChords;

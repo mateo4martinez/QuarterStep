@@ -23,6 +23,13 @@ public class SongPlayer {
     private int[] sounds;
     private boolean loaded;
 
+    public SongPlayer(Context context, SoundPool soundPool) {
+        this.context = context;
+        this.soundPool = soundPool;
+        this.song = null;
+        this.loaded = false;
+    }
+
     public SongPlayer(Context context, SoundPool soundPool, Song song) {
         this.context = context;
         this.soundPool = soundPool;
@@ -44,8 +51,17 @@ public class SongPlayer {
         });
     }
 
+    public void addSong(Song song) {
+        this.song = song;
+    }
+
     public boolean isLoaded() {
         return this.loaded;
+    }
+
+    public void playOneNote(String noteName) {
+        int index = Constants.SOUNDS_MAP.get(noteName);
+        soundPool.play(sounds[index], 1, 1, 0, 0, 1);
     }
 
     public void playSong() throws InterruptedException {
@@ -94,14 +110,13 @@ public class SongPlayer {
         List<Thread> threads = new ArrayList<>();
         for (Note note: chord) {
             String noteName = note.getNoteName();
-            int index = Constants.SOUNDS_MAP.get(noteName);
 
             threads.add(new Thread(new Runnable() {
                 @Override
                 public void run() {
                     try {
                         gate.await(); // barrier: blocks threads from playing note
-                        soundPool.play(sounds[index], 1, 1, 0, 0, 1);
+                        playOneNote(noteName);
                     } catch (BrokenBarrierException e) {
                         Log.e(TAG, "Issue with broken barrier", e);
                     } catch (InterruptedException e) {

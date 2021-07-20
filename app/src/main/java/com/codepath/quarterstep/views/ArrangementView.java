@@ -35,7 +35,7 @@ public class ArrangementView extends GridView {
             nameBlock.setCol(0);
             nameBlock.setNoteName(Constants.ROW_MAP.get(i));
             row.add(nameBlock);
-            for (int j = 1; j < Constants.NUM_COLS + 1; j++) {
+            for (int j = 1; j < Constants.NUM_COLS; j++) {
                 Note note = new Note();
                 note.setRow(i);
                 note.setCol(j);

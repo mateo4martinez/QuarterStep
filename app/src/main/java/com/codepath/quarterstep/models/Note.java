@@ -1,7 +1,12 @@
 package com.codepath.quarterstep.models;
 
+import android.content.Context;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
+
+import com.codepath.quarterstep.utils.Constants;
 
 import java.util.List;
 
@@ -47,10 +52,6 @@ public class Note {
         return this.rlCell;
     }
 
-    public void actionPlayable() {
-        this.playable = !this.playable;
-    }
-
     public boolean isPlayable() {
         return this.playable;
     }
@@ -77,5 +78,16 @@ public class Note {
 
     public int getCol() {
         return this.col;
+    }
+
+    public void selected(Context context) {
+        if (!this.playable) {
+            this.rlCell.setBackgroundColor(ContextCompat.getColor(context, Constants.COLOR_MAP.get(this.noteName)));
+            this.playable = true;
+        }
+        else {
+            this.rlCell.setBackgroundColor(ContextCompat.getColor(context, Constants.COLOR_MAP.get(Constants.NOTE_INACTIVE)));
+            this.playable = false;
+        }
     }
 }
