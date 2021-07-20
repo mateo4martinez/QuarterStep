@@ -48,7 +48,7 @@ public class Note {
         this.position = position;
     }
 
-    public int getPosition() {
+    public int getAdapterPosition() {
         return this.position;
     }
 
