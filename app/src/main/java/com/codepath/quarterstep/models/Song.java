@@ -25,7 +25,7 @@ public class Song {
         this.favorite = false;
     }
 
-    public Song(Context context, List<List<Note>> rawSong, ParseUser user) {
+    public Song(Context context, ParseUser user, List<List<Note>> rawSong) {
         this.context = context;
         this.user = user;
         this.rawSong = rawSong;

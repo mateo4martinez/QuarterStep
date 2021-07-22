@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
+import java.util.concurrent.TimeUnit;
 
 public class SongPlayer {
     public static final String TAG = "SongPlayer";
@@ -72,6 +73,7 @@ public class SongPlayer {
         for (Thread thread: threads) {
             thread.start();
             thread.join(); // wait for thread to finish
+            TimeUnit.MILLISECONDS.sleep(Constants.NOTE_DELAY);
         }
     }
 

@@ -11,6 +11,7 @@ public class Constants {
         public static final int NUM_BEATS = 17;
         public static final int NUM_ROWS = NUM_NOTES;
         public static final int NUM_COLS = NUM_BEATS;
+        public static final long NOTE_DELAY = 400;
 
     // Note Names
         // Octave 3

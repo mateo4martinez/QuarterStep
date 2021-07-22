@@ -14,14 +14,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.adapters.NotesAdapter;
 import com.codepath.quarterstep.models.Note;
+import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.codepath.quarterstep.views.ArrangementView;
+import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -36,6 +39,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private List<Note> adapterArray;
     private SoundPool soundPool;
     private SongPlayer songPlayer;
+    private Button btnPlay;
+    private Button btnShare;
+    private Button btnSave;
+    private Button btnClear;
 
     public ArrangementFragment() {
         // Required empty public constructor
@@ -53,6 +60,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         super.onViewCreated(view, savedInstanceState);
 
         avNotes = view.findViewById(R.id.avNotes);
+        btnPlay = view.findViewById(R.id.btnPlay);
+        btnShare = view.findViewById(R.id.btnShare);
+        btnSave = view.findViewById(R.id.btnSave);
+        btnClear = view.findViewById(R.id.btnClear);
 
         songPlayer = buildSongPlayer();
         songPlayer.loadSounds(getActivity(), Constants.SOUNDS_ARRAY);
@@ -68,14 +79,47 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Note note = adapterArray.get(position);
-                note.selected(getActivity());
-                if (!note.getFlag() && note.isPlayable()) {
-                    songPlayer.playOneNote(note.getNoteName());
+                selectNote(note);
+
+                notesAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btnPlay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song song = new Song(getActivity(), ParseUser.getCurrentUser(), avNotes.getGrid());
+                songPlayer.addSong(song);
+
+                try {
+                    songPlayer.playSong();
+                } catch (InterruptedException e) {
+                    Log.e(TAG, "Issue with playing song", e);
+                }
+            }
+        });
+
+        btnClear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for (int i = 0; i < adapterArray.size(); i++) {
+                    Note note = adapterArray.get(i);
+                    Log.i(TAG,  note.getNoteName() + ": " + note.getCol() + ": " + String.valueOf(note.getLayout() == null));
+                    if (note.isPlayable()) {
+                        selectNote(note);
+                    }
                 }
 
                 notesAdapter.notifyDataSetChanged();
             }
         });
+    }
+
+    private void selectNote(Note note) {
+        note.selected(getActivity());
+        if (!note.getFlag() && note.isPlayable()) {
+            songPlayer.playOneNote(note.getNoteName());
+        }
     }
 
     private SongPlayer buildSongPlayer() {
