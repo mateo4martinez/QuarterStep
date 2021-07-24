@@ -13,13 +13,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Post;
+import com.codepath.quarterstep.models.Song;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import java.io.File;
+import java.util.List;
 
 public class ShareActivity extends AppCompatActivity {
     public static final String TAG = "ShareActivity";
@@ -32,7 +35,7 @@ public class ShareActivity extends AppCompatActivity {
     private EditText etCaption;
     private Button btnFavorite;
     private Button btnShare;
-    private File song;
+    private Song song;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,22 +51,30 @@ public class ShareActivity extends AppCompatActivity {
         btnFavorite = findViewById(R.id.btnFavorite);
         btnShare = findViewById(R.id.btnShare);
 
+        // get songString from intent
+        //List<List<Note>> rawSong = Song.convertToRawSong() // pass in songString
+        // put rawSong into 'song' object
+        // build new songPlayer, loadsounds, add song into it
+        // set onclicklistener so when imagebutton clicked, play song
+
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String characteristics = etCharacteristics.getText().toString();
                 String caption = etCaption.getText().toString();
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                savePost(characteristics, caption, currentUser, song);
+                // extract and set song characteristics here
+                // save song in parse database here
+                savePost(characteristics, caption, currentUser, ""); // send songString here
             }
         });
     }
 
-    private void savePost(String characteristics, String caption, ParseUser currentUser, File song) {
+    private void savePost(String characteristics, String caption, ParseUser currentUser, String songString) {
         Post post = new Post();
         post.setCharacteristics(characteristics);
         post.setCaption(caption);
-        post.setSong(new ParseFile(song));
+        post.setSong(songString);
         post.setUser(currentUser);
         post.saveInBackground(new SaveCallback() {
             @Override

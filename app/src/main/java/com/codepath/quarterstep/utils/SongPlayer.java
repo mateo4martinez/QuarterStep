@@ -56,6 +56,10 @@ public class SongPlayer {
         this.song = song;
     }
 
+    public Song getSong() {
+        return this.song;
+    }
+
     public boolean isLoaded() {
         return this.loaded;
     }

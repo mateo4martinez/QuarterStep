@@ -1,13 +1,18 @@
 package com.codepath.quarterstep.fragments;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
+import android.media.AudioPlaybackCaptureConfiguration;
 import android.media.SoundPool;
+import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -59,6 +64,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+
         avNotes = view.findViewById(R.id.avNotes);
         btnPlay = view.findViewById(R.id.btnPlay);
         btnShare = view.findViewById(R.id.btnShare);
@@ -94,7 +100,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 try {
                     songPlayer.playSong();
                 } catch (InterruptedException e) {
-                    Log.e(TAG, "Issue with playing song", e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -111,6 +117,15 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 }
 
                 notesAdapter.notifyDataSetChanged();
+            }
+        });
+
+        btnShare.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song song = new Song(getActivity(), ParseUser.getCurrentUser(), avNotes.getGrid());
+                String songString = song.convertToParseString();
+                // intent to share activity passing songString
             }
         });
     }

@@ -5,6 +5,8 @@ import android.content.Context;
 import com.codepath.quarterstep.utils.Constants;
 import com.parse.ParseUser;
 
+import org.json.JSONArray;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +16,7 @@ public class Song {
     private List<List<Note>> chords;
     private ParseUser user;
     private String songName;
+    private String parseString;
     private boolean favorite;
 
     public Song(Context context, ParseUser user) {
@@ -22,6 +25,7 @@ public class Song {
         this.rawSong = new ArrayList<>();
         this.chords = new ArrayList<>();
         this.songName = "";
+        this.parseString = "";
         this.favorite = false;
     }
 
@@ -31,7 +35,49 @@ public class Song {
         this.rawSong = rawSong;
         this.chords = extractChords(rawSong);
         this.songName = "";
+        this.parseString = "";
         this.favorite = false;
+    }
+
+    public String convertToParseString() {
+        for (List<Note> row: this.rawSong) {
+            for (Note note: row) {
+                if (!note.getFlag() && note.isPlayable()) {
+                    this.parseString += "1";
+                } else {
+                    this.parseString += "0";
+                }
+            }
+        }
+        return this.parseString;
+    }
+
+    public static List<List<Note>> convertToRawSong(String raw) {
+        List<List<Note>> rawSong = new ArrayList<>();
+        int multiplier = Constants.NUM_ROWS;
+
+        for (int i = 0; i < Constants.NUM_ROWS; i++) {
+            List<Note> row = new ArrayList<>();
+            Note nameblock = new Note();
+            nameblock.setRow(i);
+            nameblock.setCol(0);
+            nameblock.setNoteName(Constants.ROW_MAP.get(i));
+            nameblock.triggerFlag();
+            row.add(nameblock);
+            for (int j = 1; j < Constants.NUM_COLS; j++) {
+                Note note = new Note();
+                note.setRow(i);
+                note.setCol(j);
+                note.setNoteName(Constants.ROW_MAP.get(i));
+                if (raw.charAt((i * multiplier) + j) == '1') {
+                    note.makePlayable();
+                }
+
+                row.add(note);
+            }
+        }
+
+        return rawSong;
     }
 
     public void setSongName(String name) {

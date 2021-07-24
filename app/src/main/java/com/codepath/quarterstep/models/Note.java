@@ -67,6 +67,10 @@ public class Note {
         return this.playable;
     }
 
+    public void makePlayable() {
+        this.playable = true;
+    }
+
     public void setAdapterPosition(int position) {
         this.position = position;
     }

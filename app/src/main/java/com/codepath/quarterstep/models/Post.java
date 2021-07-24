@@ -15,7 +15,7 @@ public class Post extends ParseObject{
     public static final String KEY_USER = "user";
     public static final String KEY_CAPTION = "caption";
     public static final String KEY_IMAGE = "image";
-    public static final String KEY_SONG = "song";
+    public static final String KEY_SONG = "songString";
     public static final String KEY_CHARACTERISTICS = "characteristics";
     public static final String KEY_CREATED = "createdAt";
 
@@ -43,11 +43,11 @@ public class Post extends ParseObject{
         put(KEY_IMAGE, image);
     }
 
-    public ParseFile getSong() {
-        return getParseFile(KEY_SONG);
+    public String getSong() {
+        return getString(KEY_SONG);
     }
 
-    public void setSong(ParseFile song) {
+    public void setSong(String song) {
         put(KEY_SONG, song);
     }
 

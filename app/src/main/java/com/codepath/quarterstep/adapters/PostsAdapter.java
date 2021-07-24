@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.Post;
+import com.codepath.quarterstep.utils.SongPlayer;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -23,8 +24,9 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     private Context context;
     private List<Post> posts;
+    private SongPlayer songPlayer;
 
-    public PostsAdapter(Context context, List<Post> posts) {
+    public PostsAdapter(Context context, List<Post> posts) { // receive songplayer here
         this.context = context;
         this.posts = posts;
     }
@@ -40,7 +42,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull PostsAdapter.ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post);
+        holder.bind(post); // pass in prebuilt songplayer to bind
     }
 
     @Override
@@ -66,10 +68,16 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvCharacteristics = itemView.findViewById(R.id.tvCharacteristics);
         }
 
-        public void bind(Post post) {
+        public void bind(Post post) { // receive songplayer here
             tvUsername.setText("@" + post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
             tvCharacteristics.setText(post.getCharacteristics());
+
+            // get songString from post
+            // convert songString into a song
+            // put raw song into a Song object
+            // pass song into an already built songPlayer (probably from FeedFragment)
+            // set onclicklistener so when button is clicked, song plays
 
             Date createdAt = post.getCreatedAt();
             timeAgo = Post.calculateTimeAgo(createdAt);
