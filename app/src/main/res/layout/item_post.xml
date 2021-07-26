@@ -25,6 +25,7 @@
         android:layout_marginTop="5dp"
         android:layout_marginEnd="5dp"
         android:text="username"
+        android:textStyle="bold"
         android:textColor="@color/white"
         />
 
@@ -38,7 +39,7 @@
         android:layout_marginEnd="10dp"
         android:gravity="end"
         android:text="12m"
-        android:textColor="@color/white"
+        android:textColor="@color/grey_active"
         />
 
     <TextView
@@ -52,7 +53,7 @@
         android:layout_marginTop="5dp"
         android:text="This is my caption!"
         android:textColor="@color/white"
-        android:textSize="17dp"
+        android:textSize="15sp"
         />
 
     <TextView
@@ -66,6 +67,7 @@
         android:layout_marginTop="5dp"
         android:text="Sounds like: "
         android:textColor="@color/orange_active"
+        android:textSize="15sp"
         />
 
     <TextView
@@ -75,9 +77,10 @@
         android:layout_alignStart="@+id/ibPlay"
         android:layout_alignEnd="@+id/ibPlay"
         android:layout_below="@id/ibPlay"
-        android:text="myName"
+        android:text="Untitled"
         android:gravity="center"
-        android:textColor="@color/orange_active"
+        android:textColor="@color/aqua"
+        android:textStyle="bold"
         android:layout_marginStart="5dp"
         android:layout_marginBottom="5dp"
         />
