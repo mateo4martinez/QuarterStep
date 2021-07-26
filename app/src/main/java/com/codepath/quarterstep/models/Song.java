@@ -3,6 +3,8 @@ package com.codepath.quarterstep.models;
 import android.content.Context;
 
 import com.codepath.quarterstep.utils.Constants;
+import com.parse.ParseClassName;
+import com.parse.ParseObject;
 import com.parse.ParseUser;
 
 import org.json.JSONArray;
@@ -10,33 +12,53 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Song {
-    private Context context;
+@ParseClassName("Song")
+public class Song extends ParseObject {
+    public static final String KEY_SONG = "songString";
+    public static final String KEY_USER = "user";
+    public static final String KEY_NAME = "name";
+
     private List<List<Note>> rawSong;
     private List<List<Note>> chords;
-    private ParseUser user;
-    private String songName;
     private String parseString;
     private boolean favorite;
 
-    public Song(Context context, ParseUser user) {
-        this.context = context;
-        this.user = user;
+    public Song() {
         this.rawSong = new ArrayList<>();
         this.chords = new ArrayList<>();
-        this.songName = "";
         this.parseString = "";
         this.favorite = false;
     }
 
-    public Song(Context context, ParseUser user, List<List<Note>> rawSong) {
-        this.context = context;
-        this.user = user;
+    public Song(List<List<Note>> rawSong) {
         this.rawSong = rawSong;
-        this.chords = extractChords(rawSong);
-        this.songName = "";
+        this.chords = extractChords();
         this.parseString = "";
         this.favorite = false;
+    }
+
+    public ParseUser getUser() {
+        return getParseUser(KEY_USER);
+    }
+
+    public void setUser(ParseUser user) {
+        put(KEY_USER, user);
+    }
+
+    public String getSong() {
+        return getString(KEY_SONG);
+    }
+
+    public void setSong(String song) {
+        put(KEY_SONG, song);
+    }
+
+    public String getName() {
+        return getString(KEY_NAME);
+    }
+
+    public void setName(String name) {
+        put(KEY_NAME, name);
     }
 
     public String convertToParseString() {
@@ -54,7 +76,7 @@ public class Song {
 
     public static List<List<Note>> convertToRawSong(String raw) {
         List<List<Note>> rawSong = new ArrayList<>();
-        int multiplier = Constants.NUM_ROWS;
+        int multiplier = Constants.NUM_COLS;
 
         for (int i = 0; i < Constants.NUM_ROWS; i++) {
             List<Note> row = new ArrayList<>();
@@ -72,24 +94,12 @@ public class Song {
                 if (raw.charAt((i * multiplier) + j) == '1') {
                     note.makePlayable();
                 }
-
                 row.add(note);
             }
+            rawSong.add(row);
         }
 
         return rawSong;
-    }
-
-    public void setSongName(String name) {
-        this.songName = name;
-    }
-
-    public String getSongName() {
-        return this.songName;
-    }
-
-    public ParseUser getUser() {
-        return this.user;
     }
 
     public boolean isFavorite() {
@@ -110,9 +120,11 @@ public class Song {
         this.chords.add(chord);
     }
 
-    private List<List<Note>> extractChords(List<List<Note>> rawSong) {
-        List<List<Note>> rawChords = separateColumns(rawSong);
+    private List<List<Note>> extractChords() {
+        // Separate grid into raw columns
+        List<List<Note>> rawChords = separateColumns();
 
+        // Get playable notes from raw columns, creating a chord (group of notes played at same time)
         List<List<Note>> extractedChords = new ArrayList<>();
         for (List<Note> rawChord: rawChords) {
             extractedChords.add(extractOneChord(rawChord));
@@ -130,7 +142,7 @@ public class Song {
         return chord;
     }
 
-    private List<List<Note>> separateColumns(List<List<Note>> rawSong) {
+    private List<List<Note>> separateColumns() {
         List<List<Note>> rawChords = new ArrayList<>();
         for (int i = 1; i < Constants.NUM_COLS; i++) {
             rawChords.add(separateOneColumn(i));
