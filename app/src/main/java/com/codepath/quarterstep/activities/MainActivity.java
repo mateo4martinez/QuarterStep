@@ -16,6 +16,7 @@ import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.fragments.ArrangementFragment;
 import com.codepath.quarterstep.fragments.FeedFragment;
 import com.codepath.quarterstep.fragments.ProfileFragment;
+import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.codepath.quarterstep.utils.ScreenSlidePagerAdapter;
 import com.gauravk.bubblenavigation.BubbleNavigationLinearView;
@@ -34,6 +35,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Constants.LOAD_SOUNDS(this);
+        Constants.SET_AUDIO_MANAGER(this);
 
         setUpNavigation();
     }

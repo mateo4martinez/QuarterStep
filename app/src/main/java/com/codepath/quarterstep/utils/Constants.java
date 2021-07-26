@@ -1,5 +1,11 @@
 package com.codepath.quarterstep.utils;
 
+import android.content.Context;
+import android.media.AudioAttributes;
+import android.media.AudioManager;
+import android.media.SoundPool;
+import android.util.Log;
+
 import com.codepath.quarterstep.R;
 
 import java.util.Map;
@@ -12,6 +18,9 @@ public class Constants {
         public static final int NUM_ROWS = NUM_NOTES;
         public static final int NUM_COLS = NUM_BEATS;
         public static final long NOTE_DELAY = 400;
+
+    // Strings
+        public static final String STRING_KEY = "songString";
 
     // Note Names
         // Octave 3
@@ -188,4 +197,38 @@ public class Constants {
             // Inactive color
             entry(NOTE_INACTIVE, R.color.inactive)
     );
+
+    // Soundpool components
+    public static final AudioAttributes AUDIO_ATTRIBUTES = new AudioAttributes.Builder()
+                                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                                    .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
+                                    .build();
+
+    public static SoundPool SOUNDPOOL = new SoundPool.Builder()
+                                    .setMaxStreams(NUM_NOTES)
+                                    .setAudioAttributes(AUDIO_ATTRIBUTES)
+                                    .build();
+
+    public static int[] SOUNDS;
+
+    public static void LOAD_SOUNDS(Context context) {
+        SOUNDS = new int[NUM_NOTES];
+        for (int i = 0; i < SOUNDS_ARRAY.length; i++) {
+            SOUNDS[i] = SOUNDPOOL.load(context, SOUNDS_ARRAY[i], 1);
+        }
+
+        SOUNDPOOL.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
+            @Override
+            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
+                Log.i("SOUNDPOOL", "Loading complete!" + context.getClass().getSimpleName());
+            }
+        });
+    }
+
+    public static AudioManager AUDIO_MANAGER;
+
+    public static void SET_AUDIO_MANAGER(Context context) {
+        AUDIO_MANAGER = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+        AUDIO_MANAGER.setStreamVolume(AudioManager.STREAM_MUSIC, AUDIO_MANAGER.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+    }
 }

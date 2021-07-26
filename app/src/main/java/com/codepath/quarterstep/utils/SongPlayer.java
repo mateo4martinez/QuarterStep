@@ -21,7 +21,6 @@ public class SongPlayer {
     private Context context;
     private SoundPool soundPool;
     private Song song;
-    private int[] sounds;
     private boolean loaded;
 
     public SongPlayer(Context context, SoundPool soundPool) {
@@ -38,20 +37,6 @@ public class SongPlayer {
         this.loaded = false;
     }
 
-    public void loadSounds(Context context, int[] sounds) {
-        this.sounds = new int[Constants.NUM_NOTES];
-        for (int i = 0; i < sounds.length; i++) {
-            this.sounds[i] = soundPool.load(this.context, sounds[i], 1);
-        }
-
-        soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                loaded = true;
-            }
-        });
-    }
-
     public void addSong(Song song) {
         this.song = song;
     }
@@ -62,11 +47,6 @@ public class SongPlayer {
 
     public boolean isLoaded() {
         return this.loaded;
-    }
-
-    public void playOneNote(String noteName) {
-        int index = Constants.SOUNDS_MAP.get(noteName);
-        soundPool.play(sounds[index], 1, 1, 0, 0, 1);
     }
 
     public void playSong() throws InterruptedException {
@@ -132,5 +112,10 @@ public class SongPlayer {
             }));
         }
         return threads;
+    }
+
+    public void playOneNote(String noteName) {
+        int index = Constants.SOUNDS_MAP.get(noteName);
+        soundPool.play(Constants.SOUNDS[index], 1, 1, 0, 0, 1);
     }
 }

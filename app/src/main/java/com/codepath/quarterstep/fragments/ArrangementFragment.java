@@ -2,6 +2,7 @@ package com.codepath.quarterstep.fragments;
 
 import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -22,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.activities.ShareActivity;
 import com.codepath.quarterstep.adapters.NotesAdapter;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Song;
@@ -42,7 +44,6 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private NotesAdapter notesAdapter;
     private List<List<Note>> grid;
     private List<Note> adapterArray;
-    private SoundPool soundPool;
     private SongPlayer songPlayer;
     private Button btnPlay;
     private Button btnShare;
@@ -71,8 +72,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnSave = view.findViewById(R.id.btnSave);
         btnClear = view.findViewById(R.id.btnClear);
 
-        songPlayer = buildSongPlayer();
-        songPlayer.loadSounds(getActivity(), Constants.SOUNDS_ARRAY);
+        songPlayer = new SongPlayer(getActivity(), Constants.SOUNDPOOL);
 
         avNotes.generateGrid();
         grid = avNotes.getGrid();
@@ -94,7 +94,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Song song = new Song(getActivity(), ParseUser.getCurrentUser(), avNotes.getGrid());
+                Song song = new Song(avNotes.getGrid());
                 songPlayer.addSong(song);
 
                 try {
@@ -123,9 +123,12 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Song song = new Song(getActivity(), ParseUser.getCurrentUser(), avNotes.getGrid());
+                Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
-                // intent to share activity passing songString
+                Intent intent = new Intent(getActivity(), ShareActivity.class);
+                intent.putExtra(Constants.STRING_KEY, songString);
+                startActivity(intent);
+                getActivity().finish();
             }
         });
     }
@@ -135,22 +138,5 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         if (!note.getFlag() && note.isPlayable()) {
             songPlayer.playOneNote(note.getNoteName());
         }
-    }
-
-    private SongPlayer buildSongPlayer() {
-        AudioAttributes audioAttributes = new AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_MUSIC)
-                .build();
-
-        soundPool = new SoundPool.Builder()
-                .setMaxStreams(Constants.NUM_NOTES)
-                .setAudioAttributes(audioAttributes)
-                .build();
-
-        AudioManager audioManager = (AudioManager) getActivity().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
-
-        return new SongPlayer(getActivity(), soundPool);
     }
 }
