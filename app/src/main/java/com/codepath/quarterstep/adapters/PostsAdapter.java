@@ -1,6 +1,7 @@
 package com.codepath.quarterstep.adapters;
 
 import android.content.Context;
+import android.media.SoundPool;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Post;
+import com.codepath.quarterstep.models.Song;
+import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.SongPlayer;
 
 import org.jetbrains.annotations.NotNull;
@@ -24,9 +28,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
 
     private Context context;
     private List<Post> posts;
-    private SongPlayer songPlayer;
 
-    public PostsAdapter(Context context, List<Post> posts) { // receive songplayer here
+    public PostsAdapter(Context context, List<Post> posts) {
         this.context = context;
         this.posts = posts;
     }
@@ -42,7 +45,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull @NotNull PostsAdapter.ViewHolder holder, int position) {
         Post post = posts.get(position);
-        holder.bind(post); // pass in prebuilt songplayer to bind
+        holder.bind(post);
     }
 
     @Override
@@ -57,6 +60,10 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvCreatedAt;
         private TextView tvCaption;
         private TextView tvCharacteristics;
+        private TextView tvSongName;
+        private String songString;
+        private SongPlayer songPlayer;
+        private Song song;
         private String timeAgo;
 
         public ViewHolder(@NonNull @NotNull View itemView) {
@@ -66,18 +73,31 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvCreatedAt = itemView.findViewById(R.id.tvCreatedAt);
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvCharacteristics = itemView.findViewById(R.id.tvCharacteristics);
+            tvSongName = itemView.findViewById(R.id.tvSongName);
         }
 
-        public void bind(Post post) { // receive songplayer here
+        public void bind(Post post) {
             tvUsername.setText("@" + post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
             tvCharacteristics.setText(post.getCharacteristics());
+            tvSongName.setText(post.getName());
 
-            // get songString from post
-            // convert songString into a song
-            // put raw song into a Song object
-            // pass song into an already built songPlayer (probably from FeedFragment)
-            // set onclicklistener so when button is clicked, song plays
+            // Parse string into song obj
+            songString = post.getSong();
+            List<List<Note>> rawSong = Song.convertToRawSong(songString);
+            song = new Song(rawSong);
+            songPlayer = new SongPlayer(context, Constants.SOUNDPOOL, song);
+
+            ibPlay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        songPlayer.playSong();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
 
             Date createdAt = post.getCreatedAt();
             timeAgo = Post.calculateTimeAgo(createdAt);
