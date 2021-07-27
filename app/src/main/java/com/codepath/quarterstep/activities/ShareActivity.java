@@ -51,7 +51,7 @@ public class ShareActivity extends AppCompatActivity {
     private Button btnShare;
     private SongPlayer songPlayer;
     private Song song;
-    private String songName;
+    private String name;
     private String songString;
     private boolean wasSaved;
 
@@ -82,12 +82,12 @@ public class ShareActivity extends AppCompatActivity {
         String date = dateFormat.format(currentTime);
         tvCreatedAt.setText(date);
 
-        songName = getIntent().getStringExtra(Constants.NAME_KEY);
+        name = getIntent().getStringExtra(Constants.NAME_KEY);
         songString = getIntent().getStringExtra(Constants.SONG_KEY);
         wasSaved = getIntent().getBooleanExtra(Constants.SAVED_KEY, false);
 
-        if (songName.length() != 0) {
-            etSongName.setText(songName);
+        if (name.length() != 0) {
+            etSongName.setText(name);
         }
 
         List<List<Note>> rawSong = Song.convertToRawSong(songString);
@@ -110,13 +110,16 @@ public class ShareActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 ParseUser currentUser = ParseUser.getCurrentUser();
-                String songName = etSongName.getText().toString();
-                if (!wasSaved) {
+                String songName = etSongName.getText().toString(); // add length error handling here
+
+                if (!name.equals(songName)) { // user changed name of song
+                    saveSong(songString, currentUser, songName);
+                } else if (!wasSaved) {
                     saveSong(songString, currentUser, songName);
                 }
 
-                String characteristics = etCharacteristics.getText().toString();
-                String caption = etCaption.getText().toString();
+                String characteristics = etCharacteristics.getText().toString(); // add length error handling here
+                String caption = etCaption.getText().toString(); // and here too
                 savePost(characteristics, caption, currentUser, songName, songString);
             }
         });

@@ -90,6 +90,7 @@
         android:paddingStart="3dp"
         android:paddingEnd="3dp"
         android:textSize="20sp"
+        android:text=""
         android:inputType="textMultiLine"
         />
 
@@ -109,6 +110,7 @@
         android:paddingEnd="3dp"
         android:inputType="textMultiLine"
         android:hint="Write a caption..."
+        android:text=""
         />
 
     <Button
