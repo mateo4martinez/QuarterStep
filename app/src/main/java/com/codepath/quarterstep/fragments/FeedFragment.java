@@ -15,12 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.activities.EndlessRecyclerViewScrollListener;
 import com.codepath.quarterstep.adapters.PostsAdapter;
 import com.codepath.quarterstep.models.Post;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.parse.FindCallback;
 import com.parse.ParseException;
 import com.parse.ParseQuery;
+import com.parse.ParseUser;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -32,8 +34,12 @@ public class FeedFragment extends ScreenSlidePageFragment {
 
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
+    private EndlessRecyclerViewScrollListener scrollListener;
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
+
+    private int limit = 0;
+    private boolean loadMore = false;
 
     public FeedFragment() {
         // Required empty public constructor
@@ -53,8 +59,16 @@ public class FeedFragment extends ScreenSlidePageFragment {
         allPosts = new ArrayList<>();
         adapter = new PostsAdapter(getContext(), allPosts);
 
+        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         rvPosts.setAdapter(adapter);
-        rvPosts.setLayoutManager(new LinearLayoutManager(getContext()));
+        rvPosts.setLayoutManager(linearLayoutManager);
+
+        scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
+            @Override
+            public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
+                queryMorePosts();
+            }
+        };
 
         setupRefresh(view);
 
@@ -82,6 +96,38 @@ public class FeedFragment extends ScreenSlidePageFragment {
         });
     }
 
+    private void queryMorePosts() {
+        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
+        query.include(Post.KEY_USER);
+
+        if (loadMore) {
+            query.setSkip(limit);
+            query.setLimit(20);
+        } else {
+            query.setLimit(20);
+        }
+
+        query.findInBackground(new FindCallback<Post>() {
+            @Override
+            public void done(List<Post> posts, ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Issue with getting posts", e);
+                    return;
+                }
+
+                limit += posts.size();
+                if (posts.isEmpty()) {
+                    loadMore = false;
+                } else {
+                    loadMore = true;
+                }
+
+                allPosts.addAll(posts);
+                adapter.notifyDataSetChanged();
+            }
+        });
+    }
+
     private void setupRefresh(View view) {
         swipeContainer = (SwipeRefreshLayout) view.findViewById(R.id.swipeContainer);
         swipeContainer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
@@ -91,6 +137,7 @@ public class FeedFragment extends ScreenSlidePageFragment {
                 queryPosts();
                 adapter.addAll(allPosts);
                 swipeContainer.setRefreshing(false);
+                scrollListener.resetState();
             }
         });
     }

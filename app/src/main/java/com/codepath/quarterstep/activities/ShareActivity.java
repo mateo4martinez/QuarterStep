@@ -25,6 +25,7 @@ import com.codepath.quarterstep.models.Post;
 import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.SongPlayer;
+import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseUser;
@@ -107,6 +108,7 @@ public class ShareActivity extends AppCompatActivity {
                 String characteristics = etCharacteristics.getText().toString();
                 String caption = etCaption.getText().toString();
                 savePost(characteristics, caption, currentUser, songName, songString);
+                //saveStuff(songString, currentUser, songName, characteristics, caption);
             }
         });
     }
@@ -123,6 +125,43 @@ public class ShareActivity extends AppCompatActivity {
                     Log.e(TAG, "Error while saving song", e);
                     Toast.makeText(ShareActivity.this, "Error while saving song!", Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+    }
+
+    public void saveStuff(String songString, ParseUser currentUser, String songName, String characteristics, String caption) {
+        Song song = new Song();
+        song.setSong(songString);
+        song.setUser(currentUser);
+        song.setName(songName);
+        song.setACL(new ParseACL(currentUser));
+        song.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving song", e);
+                    Toast.makeText(ShareActivity.this, "Error while saving song!", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        Post post = new Post();
+        post.setCharacteristics(characteristics);
+        post.setCaption(caption);
+        post.setUser(currentUser);
+        post.setSong(songString);
+        post.setName(songName);
+        //post.setThing(song);
+        post.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving post", e);
+                    Toast.makeText(ShareActivity.this, "Error while saving post!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                goMainActivity();
+                finish();
             }
         });
     }
