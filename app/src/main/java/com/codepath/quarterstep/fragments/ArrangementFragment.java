@@ -21,6 +21,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.activities.ShareActivity;
@@ -31,7 +33,9 @@ import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.codepath.quarterstep.views.ArrangementView;
+import com.parse.ParseException;
 import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -45,10 +49,12 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private List<List<Note>> grid;
     private List<Note> adapterArray;
     private SongPlayer songPlayer;
+    private EditText etSongName;
     private Button btnPlay;
     private Button btnShare;
     private Button btnSave;
     private Button btnClear;
+    private boolean wasSaved = false;
 
     public ArrangementFragment() {
         // Required empty public constructor
@@ -67,6 +73,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
 
 
         avNotes = view.findViewById(R.id.avNotes);
+        etSongName = view.findViewById(R.id.etSongName);
         btnPlay = view.findViewById(R.id.btnPlay);
         btnShare = view.findViewById(R.id.btnShare);
         btnSave = view.findViewById(R.id.btnSave);
@@ -126,9 +133,45 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
-                intent.putExtra(Constants.STRING_KEY, songString);
+                String songName = "";
+                if (etSongName.getText().toString().length() != 0) {
+                    songName = etSongName.getText().toString();
+                }
+                intent.putExtra(Constants.NAME_KEY, songName);
+                intent.putExtra(Constants.SONG_KEY, songString);
+                intent.putExtra(Constants.SAVED_KEY, wasSaved);
+                wasSaved = false;
                 startActivity(intent);
                 getActivity().finish();
+            }
+        });
+
+        btnSave.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Song song = new Song(avNotes.getGrid());
+                String songString = song.convertToParseString();
+                String songName = etSongName.getText().toString();
+                ParseUser currentUser = ParseUser.getCurrentUser();
+
+                saveSong(songString, currentUser, songName);
+                wasSaved = true;
+            }
+        });
+    }
+
+    private void saveSong(String songString, ParseUser currentUser, String songName) {
+        Song song = new Song();
+        song.setSong(songString);
+        song.setUser(currentUser);
+        song.setName(songName);
+        song.saveInBackground(new SaveCallback() {
+            @Override
+            public void done(ParseException e) {
+                if (e != null) {
+                    Log.e(TAG, "Error while saving song", e);
+                    Toast.makeText(getActivity(), "Error while saving song!", Toast.LENGTH_SHORT).show();
+                }
             }
         });
     }

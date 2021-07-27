@@ -20,7 +20,9 @@ public class Constants {
         public static final long NOTE_DELAY = 400;
 
     // Strings
-        public static final String STRING_KEY = "songString";
+        public static final String SONG_KEY = "songString";
+        public static final String SAVED_KEY = "saved";
+        public static final String NAME_KEY = "name";
 
     // Note Names
         // Octave 3

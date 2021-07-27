@@ -13,12 +13,32 @@
         android:background="@color/darkBluegreen"
         >
 
+        <EditText
+            android:id="@+id/etSongName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="start|top"
+            android:layout_alignStart="@+id/btnClear"
+            android:layout_alignEnd="@+id/btnPlay"
+            android:layout_alignParentTop="true"
+            android:hint="Enter a name"
+            android:textColorHint="@color/orange_active"
+            android:textSize="20sp"
+            android:text=""
+            android:textColor="@color/orange_active"
+            android:inputType="text"
+            android:maxLines="1"
+            android:imeOptions="actionDone"
+            android:layout_marginTop="2dp"
+            />
+
         <Button
             android:id="@+id/btnPlay"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="20dp"
+            android:layout_below="@+id/etSongName"
+            android:layout_marginTop="5dp"
             android:layout_marginBottom="20dp"
             android:text="Play"
             />

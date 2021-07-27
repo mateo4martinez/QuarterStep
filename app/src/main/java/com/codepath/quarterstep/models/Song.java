@@ -22,12 +22,14 @@ public class Song extends ParseObject {
     private List<List<Note>> chords;
     private String parseString;
     private boolean favorite;
+    private boolean saved;
 
     public Song() {
         this.rawSong = new ArrayList<>();
         this.chords = new ArrayList<>();
         this.parseString = "";
         this.favorite = false;
+        this.saved = false;
     }
 
     public Song(List<List<Note>> rawSong) {
@@ -35,6 +37,7 @@ public class Song extends ParseObject {
         this.chords = extractChords();
         this.parseString = "";
         this.favorite = false;
+        this.saved = false;
     }
 
     public ParseUser getUser() {
@@ -98,17 +101,23 @@ public class Song extends ParseObject {
             }
             rawSong.add(row);
         }
-
         return rawSong;
+    }
+
+    public boolean isSaved() {
+        return this.saved;
+    }
+
+    public void actionSave() {
+        this.saved = !this.saved;
     }
 
     public boolean isFavorite() {
         return this.favorite;
     }
 
-    public boolean actionFavorite() {
+    public void actionFavorite() {
         this.favorite = !this.favorite;
-        return this.favorite;
     }
 
     public List<List<Note>> getChords() {

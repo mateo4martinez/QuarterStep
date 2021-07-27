@@ -49,10 +49,11 @@ public class ShareActivity extends AppCompatActivity {
     private EditText etCaption;
     private Button btnFavorite;
     private Button btnShare;
-    private SoundPool soundPool;
     private SongPlayer songPlayer;
     private Song song;
+    private String songName;
     private String songString;
+    private boolean wasSaved;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,11 +78,18 @@ public class ShareActivity extends AppCompatActivity {
         etCaption.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
         Date currentTime = Calendar.getInstance().getTime();
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String date = dateFormat.format(currentTime);
         tvCreatedAt.setText(date);
 
-        songString = getIntent().getStringExtra(Constants.STRING_KEY);
+        songName = getIntent().getStringExtra(Constants.NAME_KEY);
+        songString = getIntent().getStringExtra(Constants.SONG_KEY);
+        wasSaved = getIntent().getBooleanExtra(Constants.SAVED_KEY, false);
+
+        if (songName.length() != 0) {
+            etSongName.setText(songName);
+        }
+
         List<List<Note>> rawSong = Song.convertToRawSong(songString);
         song = new Song(rawSong);
         songPlayer = buildSongPlayer();
@@ -103,12 +111,13 @@ public class ShareActivity extends AppCompatActivity {
             public void onClick(View v) {
                 ParseUser currentUser = ParseUser.getCurrentUser();
                 String songName = etSongName.getText().toString();
-                saveSong(songString, currentUser, songName);
+                if (!wasSaved) {
+                    saveSong(songString, currentUser, songName);
+                }
 
                 String characteristics = etCharacteristics.getText().toString();
                 String caption = etCaption.getText().toString();
                 savePost(characteristics, caption, currentUser, songName, songString);
-                //saveStuff(songString, currentUser, songName, characteristics, caption);
             }
         });
     }
@@ -125,43 +134,6 @@ public class ShareActivity extends AppCompatActivity {
                     Log.e(TAG, "Error while saving song", e);
                     Toast.makeText(ShareActivity.this, "Error while saving song!", Toast.LENGTH_SHORT).show();
                 }
-            }
-        });
-    }
-
-    public void saveStuff(String songString, ParseUser currentUser, String songName, String characteristics, String caption) {
-        Song song = new Song();
-        song.setSong(songString);
-        song.setUser(currentUser);
-        song.setName(songName);
-        song.setACL(new ParseACL(currentUser));
-        song.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving song", e);
-                    Toast.makeText(ShareActivity.this, "Error while saving song!", Toast.LENGTH_SHORT).show();
-                }
-            }
-        });
-
-        Post post = new Post();
-        post.setCharacteristics(characteristics);
-        post.setCaption(caption);
-        post.setUser(currentUser);
-        post.setSong(songString);
-        post.setName(songName);
-        //post.setThing(song);
-        post.saveInBackground(new SaveCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving post", e);
-                    Toast.makeText(ShareActivity.this, "Error while saving post!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                goMainActivity();
-                finish();
             }
         });
     }
