@@ -8,8 +8,10 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
 import com.parse.LogInCallback;
 import com.parse.ParseException;
@@ -19,6 +21,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public static final String TAG = "LoginActivity";
 
+    private ImageView ivLogo;
     private EditText etUsername;
     private EditText etPassword;
     private Button btnLogin;
@@ -34,10 +37,13 @@ public class LoginActivity extends AppCompatActivity {
             goMainActivity();
         }
 
+        ivLogo = findViewById(R.id.ivLogo);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignup = findViewById(R.id.btnSignup);
+
+        Glide.with(getApplicationContext()).load(R.drawable.qs_logo).into(ivLogo);
 
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

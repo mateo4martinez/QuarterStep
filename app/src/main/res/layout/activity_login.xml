@@ -13,7 +13,7 @@
         android:layout_height="200dp"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
-        tools:src="@drawable/ic_launcher_foreground" />
+        tools:src="@drawable/qs_logo" />
 
     <EditText
         android:id="@+id/etUsername"
