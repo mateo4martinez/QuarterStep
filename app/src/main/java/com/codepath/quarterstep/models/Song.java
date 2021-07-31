@@ -12,7 +12,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Song extends ParseObject {
+public class Song {
 
     private List<List<Note>> rawSong;
     private List<List<Note>> chords;
