@@ -14,10 +14,12 @@
             android:layout_width="110dp"
             android:layout_height="110dp"
             android:layout_alignParentTop="true"
+            android:scaleType="centerCrop"
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
-            android:src="@drawable/default_icon"
+            android:backgroundTint="@color/darkBluegreen"
+            android:src="@drawable/ic_baseline_play_circle_filled_24"
             />
 
         <TextView

@@ -7,11 +7,15 @@ import android.media.SoundPool;
 import android.util.Log;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.models.User;
 
 import java.util.Map;
 import static java.util.Map.entry;
 
 public class Constants {
+    // Current User
+        public static User currentUser = new User();
+
     // Ints
         public static final int NUM_NOTES = 24;
         public static final int NUM_BEATS = 17;

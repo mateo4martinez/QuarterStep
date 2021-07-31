@@ -4,7 +4,6 @@ import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
@@ -19,10 +18,12 @@ import com.codepath.quarterstep.activities.EndlessRecyclerViewScrollListener;
 import com.codepath.quarterstep.adapters.PostsAdapter;
 import com.codepath.quarterstep.models.Post;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
-import com.parse.FindCallback;
-import com.parse.ParseException;
-import com.parse.ParseQuery;
-import com.parse.ParseUser;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -35,6 +36,7 @@ public class FeedFragment extends ScreenSlidePageFragment {
     private RecyclerView rvPosts;
     private SwipeRefreshLayout swipeContainer;
     private EndlessRecyclerViewScrollListener scrollListener;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     protected PostsAdapter adapter;
     protected List<Post> allPosts;
 
@@ -66,64 +68,50 @@ public class FeedFragment extends ScreenSlidePageFragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                queryMorePosts();
+                //queryMorePosts();
             }
         };
 
         setupRefresh(view);
 
-        queryPosts();
+        queryPostsFirebase();
     }
 
-    private void queryPosts() {
-        // establish what type of query - Post class
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-        query.setLimit(20);
-        // order posts by creation date (newest first)
-        query.addDescendingOrder(Post.KEY_CREATED);
-        // async call for posts
-        query.findInBackground(new FindCallback<Post>() {
-            @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
-            }
-        });
-    }
-
-    private void queryMorePosts() {
-        ParseQuery<Post> query = ParseQuery.getQuery(Post.class);
-        query.include(Post.KEY_USER);
-
+    private void queryPostsFirebase() {
+        Task<QuerySnapshot> queryTask;
         if (loadMore) {
-            query.setSkip(limit);
-            query.setLimit(20);
+            queryTask = db.collection("posts")
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .limit(10)
+                    .startAfter(limit).get();
         } else {
-            query.setLimit(20);
+            queryTask = db.collection("posts")
+                    .orderBy("createdAt", Query.Direction.DESCENDING)
+                    .limit(20).get();
         }
 
-        query.findInBackground(new FindCallback<Post>() {
+        queryTask.addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
-            public void done(List<Post> posts, ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Issue with getting posts", e);
-                    return;
-                }
+            public void onComplete(@NonNull @NotNull Task<QuerySnapshot> task) {
+                if (task.isSuccessful()) {
+                    List<DocumentSnapshot> documents = task.getResult().getDocuments();
+                    List<Post> lst = new ArrayList<>();
+                    for (DocumentSnapshot doc: documents) {
+                        lst.add(doc.toObject(Post.class));
+                    }
 
-                limit += posts.size();
-                if (posts.isEmpty()) {
-                    loadMore = false;
+                    limit += lst.size();
+                    if (lst.isEmpty()) {
+                        loadMore = false;
+                    } else {
+                        loadMore = true;
+                    }
+
+                    allPosts.addAll(lst);
+                    adapter.notifyDataSetChanged();
                 } else {
-                    loadMore = true;
+                    Log.e(TAG, "Issue with querying posts.", task.getException());
                 }
-
-                allPosts.addAll(posts);
-                adapter.notifyDataSetChanged();
             }
         });
     }
@@ -134,7 +122,7 @@ public class FeedFragment extends ScreenSlidePageFragment {
             @Override
             public void onRefresh() {
                 adapter.clear();
-                queryPosts();
+                queryPostsFirebase();
                 adapter.addAll(allPosts);
                 swipeContainer.setRefreshing(false);
                 scrollListener.resetState();

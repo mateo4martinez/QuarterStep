@@ -1,12 +1,11 @@
 package com.codepath.quarterstep.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.media.AudioAttributes;
 import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Bundle;
 import android.text.InputType;
 import android.util.Log;
@@ -17,21 +16,22 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Post;
 import com.codepath.quarterstep.models.Song;
+import com.codepath.quarterstep.models.SongReference;
+import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.SongPlayer;
-import com.parse.ParseACL;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseUser;
-import com.parse.SaveCallback;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.File;
+import org.jetbrains.annotations.NotNull;
+
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -53,7 +53,10 @@ public class ShareActivity extends AppCompatActivity {
     private Song song;
     private String name;
     private String songString;
+    private Date currentTime = Calendar.getInstance().getTime();
+    private String date;
     private boolean wasSaved;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -77,9 +80,8 @@ public class ShareActivity extends AppCompatActivity {
         etCaption.setImeOptions(EditorInfo.IME_ACTION_DONE);
         etCaption.setRawInputType(InputType.TYPE_CLASS_TEXT);
 
-        Date currentTime = Calendar.getInstance().getTime();
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = dateFormat.format(currentTime);
+        date = dateFormat.format(currentTime);
         tvCreatedAt.setText(date);
 
         name = getIntent().getStringExtra(Constants.NAME_KEY);
@@ -109,55 +111,48 @@ public class ShareActivity extends AppCompatActivity {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ParseUser currentUser = ParseUser.getCurrentUser();
+                User user = Constants.currentUser;
                 String songName = etSongName.getText().toString(); // add length error handling here
 
-                if (!name.equals(songName)) { // user changed name of song
-                    saveSong(songString, currentUser, songName);
-                } else if (!wasSaved) {
-                    saveSong(songString, currentUser, songName);
+                if (!name.equals(songName) || !wasSaved) { // user changed name or has not saved song
+                    saveSongFirebase(user, songString, songName);
                 }
 
                 String characteristics = etCharacteristics.getText().toString(); // add length error handling here
                 String caption = etCaption.getText().toString(); // and here too
-                savePost(characteristics, caption, currentUser, songName, songString);
+
+                savePostFirebase(user, songString, songName, caption, characteristics);
             }
         });
     }
 
-    private void saveSong(String songString, ParseUser currentUser, String songName) {
-        Song song = new Song();
-        song.setSong(songString);
-        song.setUser(currentUser);
-        song.setName(songName);
-        song.saveInBackground(new SaveCallback() {
+    private void saveSongFirebase(User user, String songString, String songName) {
+        SongReference songReference = new SongReference(user, songName, songString, date, false);
+
+        db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving song", e);
-                    Toast.makeText(ShareActivity.this, "Error while saving song!", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "Saving song to firebase success!");
+                } else {
+                    Log.e(TAG, "Issue with saving song.", task.getException());
                 }
             }
         });
     }
 
-    private void savePost(String characteristics, String caption, ParseUser currentUser, String songName, String songString) {
-        Post post = new Post();
-        post.setCharacteristics(characteristics);
-        post.setCaption(caption);
-        post.setUser(currentUser);
-        post.setSong(songString);
-        post.setName(songName);
-        post.saveInBackground(new SaveCallback() {
+    public void savePostFirebase(User user, String songString, String name, String caption, String characteristics) {
+        Post postReference = new Post(user, songString, name, caption, characteristics, currentTime);
+
+        db.collection("posts").add(postReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving post", e);
-                    Toast.makeText(ShareActivity.this, "Error while saving post!", Toast.LENGTH_SHORT).show();
-                    return;
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "Uploading post to firebase success!");
+                    goMainActivity();
+                } else {
+                    Log.e(TAG, "Issue with uploading post.", task.getException());
                 }
-                goMainActivity();
-                finish();
             }
         });
     }

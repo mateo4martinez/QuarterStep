@@ -2,83 +2,78 @@ package com.codepath.quarterstep.models;
 
 import android.util.Log;
 
-import com.parse.ParseClassName;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseUser;
-
 import java.util.Date;
 
-@ParseClassName("Post")
-public class Post extends ParseObject{
+public class Post {
+    private User user;
+    private String songString;
+    private String name;
+    private String caption;
+    private String characteristics;
+    private Date createdAt;
 
-    public static final String KEY_USER = "user";
-    public static final String KEY_CAPTION = "caption";
-    public static final String KEY_IMAGE = "image";
-    public static final String KEY_SONG = "songString";
-    public static final String KEY_THING = "objSong";
-    public static final String KEY_NAME = "name";
-    public static final String KEY_CHARACTERISTICS = "characteristics";
-    public static final String KEY_CREATED = "createdAt";
-
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
+    public Post() {
+        // must have a public no-argument constructor for firebase
     }
 
-    public void setUser(ParseUser user) {
-        put(KEY_USER, user);
+    public Post(User user, String songString, String name, String caption, String characteristics, Date createdAt) {
+        this.user = user;
+        this.songString = songString;
+        this.name = name;
+        this.caption = caption;
+        this.characteristics = characteristics;
+        this.createdAt = createdAt;
     }
 
-    public String getCaption() {
-        return getString(KEY_CAPTION);
+    public User getUser() {
+        return this.user;
     }
 
-    public void setCaption(String caption) {
-        put(KEY_CAPTION, caption);
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public ParseFile getImage() {
-        return getParseFile(KEY_IMAGE);
+    public String getSongString() {
+        return this.songString;
     }
 
-    public void setImage(ParseFile image) {
-        put(KEY_IMAGE, image);
+    public void setSongString(String songString) {
+        this.songString = songString;
     }
-
-    public String getSong() {
-        return getString(KEY_SONG);
-    }
-
-    public void setSong(String song) {
-        put(KEY_SONG, song);
-    }
-
-//    public Song getThing() {
-//        return (Song) getParseObject(KEY_THING);
-//    }
-//
-//    public void setThing(ParseObject song) {
-//        put(KEY_THING, song);
-//    }
 
     public String getName() {
-        return getString(KEY_NAME);
+        return this.name;
     }
 
     public void setName(String name) {
-        put(KEY_NAME, name);
+        this.name = name;
+    }
+
+    public String getCaption() {
+        return this.caption;
+    }
+
+    public void setCaption(String caption) {
+        this.caption = caption;
     }
 
     public String getCharacteristics() {
-        return "Sounds like: " + getString(KEY_CHARACTERISTICS);
+        return this.characteristics;
     }
 
     public void setCharacteristics(String characteristics) {
-        put(KEY_CHARACTERISTICS, characteristics);
+        this.characteristics = characteristics;
+    }
+
+    public Date getCreatedAt() {
+        return this.createdAt;
+    }
+
+    public void setCreatedAt(Date date) {
+        this.createdAt = date;
     }
 
     public static String calculateTimeAgo(Date createdAt) {
-
         int SECOND_MILLIS = 1000;
         int MINUTE_MILLIS = 60 * SECOND_MILLIS;
         int HOUR_MILLIS = 60 * MINUTE_MILLIS;

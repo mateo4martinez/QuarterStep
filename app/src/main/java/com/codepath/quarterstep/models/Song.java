@@ -12,11 +12,7 @@ import org.json.JSONArray;
 import java.util.ArrayList;
 import java.util.List;
 
-@ParseClassName("Song")
 public class Song extends ParseObject {
-    public static final String KEY_SONG = "songString";
-    public static final String KEY_USER = "user";
-    public static final String KEY_NAME = "name";
 
     private List<List<Note>> rawSong;
     private List<List<Note>> chords;
@@ -38,30 +34,6 @@ public class Song extends ParseObject {
         this.parseString = "";
         this.favorite = false;
         this.saved = false;
-    }
-
-    public ParseUser getUser() {
-        return getParseUser(KEY_USER);
-    }
-
-    public void setUser(ParseUser user) {
-        put(KEY_USER, user);
-    }
-
-    public String getSong() {
-        return getString(KEY_SONG);
-    }
-
-    public void setSong(String song) {
-        put(KEY_SONG, song);
-    }
-
-    public String getName() {
-        return getString(KEY_NAME);
-    }
-
-    public void setName(String name) {
-        put(KEY_NAME, name);
     }
 
     public String convertToParseString() {

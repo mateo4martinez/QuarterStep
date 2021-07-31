@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1092011769862",
+    "firebase_url": "https://quarterstep-default-rtdb.firebaseio.com",
+    "project_id": "quarterstep",
+    "storage_bucket": "quarterstep.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1092011769862:android:94e78f64850d2101590387",
+        "android_client_info": {
+          "package_name": "com.codepath.quarterstep"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1092011769862-unhf5c17399vhe574cm0608k5a7fdet6.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCAmQahLPGQEefO_U0i_pJkoOsNutDTxuA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1092011769862-unhf5c17399vhe574cm0608k5a7fdet6.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

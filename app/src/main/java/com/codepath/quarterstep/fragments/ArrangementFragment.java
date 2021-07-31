@@ -1,19 +1,10 @@
 package com.codepath.quarterstep.fragments;
 
-import android.Manifest;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.media.AudioAttributes;
-import android.media.AudioManager;
-import android.media.AudioPlaybackCaptureConfiguration;
-import android.media.SoundPool;
-import android.media.projection.MediaProjectionManager;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,16 +20,26 @@ import com.codepath.quarterstep.activities.ShareActivity;
 import com.codepath.quarterstep.adapters.NotesAdapter;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Song;
+import com.codepath.quarterstep.models.SongReference;
+import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.codepath.quarterstep.views.ArrangementView;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 import com.parse.ParseException;
 import com.parse.ParseUser;
 import com.parse.SaveCallback;
 
 import org.jetbrains.annotations.NotNull;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class ArrangementFragment extends ScreenSlidePageFragment {
@@ -48,6 +49,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private NotesAdapter notesAdapter;
     private List<List<Note>> grid;
     private List<Note> adapterArray;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private SongPlayer songPlayer;
     private EditText etSongName;
     private Button btnPlay;
@@ -70,7 +72,6 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     @Override
     public void onViewCreated(@NonNull @NotNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
 
         avNotes = view.findViewById(R.id.avNotes);
         etSongName = view.findViewById(R.id.etSongName);
@@ -117,13 +118,13 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             public void onClick(View v) {
                 for (int i = 0; i < adapterArray.size(); i++) {
                     Note note = adapterArray.get(i);
-                    Log.i(TAG,  note.getNoteName() + ": " + note.getCol() + ": " + String.valueOf(note.getLayout() == null));
                     if (note.isPlayable()) {
                         selectNote(note);
                     }
                 }
 
                 notesAdapter.notifyDataSetChanged();
+                wasSaved = false;
             }
         });
 
@@ -151,26 +152,28 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             public void onClick(View v) {
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
-                String songName = etSongName.getText().toString();
-                ParseUser currentUser = ParseUser.getCurrentUser();
+                String songName = etSongName.getText().toString(); // add length error handling here
+                User user = Constants.currentUser;
 
-                saveSong(songString, currentUser, songName);
+                saveSong(user, songString, songName);
                 wasSaved = true;
             }
         });
     }
 
-    private void saveSong(String songString, ParseUser currentUser, String songName) {
-        Song song = new Song();
-        song.setSong(songString);
-        song.setUser(currentUser);
-        song.setName(songName);
-        song.saveInBackground(new SaveCallback() {
+    private void saveSong(User user, String songString, String songName) {
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String date = dateFormat.format(Calendar.getInstance().getTime());
+
+        SongReference songReference = new SongReference(user, songName, songString, date, false);
+
+        db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Error while saving song", e);
-                    Toast.makeText(getActivity(), "Error while saving song!", Toast.LENGTH_SHORT).show();
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "Saving song to firebase success!");
+                } else {
+                    Log.e(TAG, "Issue with saving song.", task.getException());
                 }
             }
         });

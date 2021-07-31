@@ -1,7 +1,6 @@
 package com.codepath.quarterstep.adapters;
 
 import android.content.Context;
-import android.media.SoundPool;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -82,8 +81,8 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvCharacteristics.setText(post.getCharacteristics());
             tvSongName.setText(post.getName());
 
-            // Parse string into song obj
-            songString = post.getSong();
+            // Parse string into Song object
+            songString = post.getSongString();
             List<List<Note>> rawSong = Song.convertToRawSong(songString);
             song = new Song(rawSong);
             songPlayer = new SongPlayer(context, Constants.SOUNDPOOL, song);
@@ -91,6 +90,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ibPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).repeat(16).playOn(ibPlay);
                     try {
                         songPlayer.playSong();
                     } catch (InterruptedException e) {

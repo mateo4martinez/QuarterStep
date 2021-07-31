@@ -1,5 +1,6 @@
 package com.codepath.quarterstep.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -13,9 +14,15 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
-import com.parse.LogInCallback;
-import com.parse.ParseException;
-import com.parse.ParseUser;
+import com.codepath.quarterstep.models.User;
+import com.codepath.quarterstep.utils.Constants;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import org.jetbrains.annotations.NotNull;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -26,15 +33,36 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etPassword;
     private Button btnLogin;
     private Button btnSignup;
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Check if user already logged in
-        if (ParseUser.getCurrentUser() != null) {
-            goMainActivity();
+        mAuth = FirebaseAuth.getInstance();
+        // Check if firebase user is already logged in
+        if (mAuth.getCurrentUser() != null) {
+            String uid = mAuth.getCurrentUser().getUid();
+
+            Task<DocumentSnapshot> loginTask = db.collection("users").document(uid).get();
+            loginTask.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot document = task.getResult();
+                        if (document.exists()) {
+                            // convert to a POJO
+                            Constants.currentUser = document.toObject(User.class);
+                            goMainActivity();
+                            Log.i(TAG, "Current user login successful.");
+                        }
+                    } else {
+                        Log.e(TAG, "Issue with logging in current user.", task.getException());
+                    }
+                }
+            });
         }
 
         ivLogo = findViewById(R.id.ivLogo);
@@ -50,7 +78,8 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View v) {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
-                loginUser(username, password);
+                String email = etUsername.getText().toString(); // pass instead of username in future
+                firebaseLogin(email, password);
             }
         });
 
@@ -62,20 +91,30 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void loginUser(String username, String password) {
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    goMainActivity();
-                }
-                else {
-                    Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(LoginActivity.this, "Issue with login.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        });
+    public void firebaseLogin(String email, String password) {
+        mAuth.signInWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull @NotNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Set logged in user to be current user
+                            String uid = mAuth.getCurrentUser().getUid();
+                            Task<DocumentSnapshot> userTask = db.collection("users").document(uid).get();
+                            userTask.addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                                @Override
+                                public void onComplete(@NonNull @NotNull Task<DocumentSnapshot> task) {
+                                    DocumentSnapshot document = task.getResult();
+                                    if (document.exists()) {
+                                        Constants.currentUser = document.toObject(User.class);
+                                        goMainActivity();
+                                    }
+                                }
+                            });
+                        } else {
+                            Log.e(TAG, "Issue with login.", task.getException());
+                        }
+                    }
+                });
     }
 
     private void goMainActivity() {
