@@ -43,7 +43,6 @@ import java.util.List;
 public class ShareActivity extends AppCompatActivity {
     public static final String TAG = "ShareActivity";
 
-    private ImageView ivImage;
     private ImageButton ibPlay;
     private ImageButton ibBack;
     private EditText etSongName;
@@ -58,6 +57,7 @@ public class ShareActivity extends AppCompatActivity {
     private String songString;
     private Date currentTime = Calendar.getInstance().getTime();
     private String date;
+    private boolean isFavorite;
     private boolean wasSaved;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -68,7 +68,6 @@ public class ShareActivity extends AppCompatActivity {
 
         Constants.LOAD_SOUNDS(this);
 
-        ivImage = findViewById(R.id.ivImage);
         ibPlay = findViewById(R.id.ibPlay);
         ibBack = findViewById(R.id.ibBack);
         etSongName = findViewById(R.id.etSongName);
@@ -88,9 +87,14 @@ public class ShareActivity extends AppCompatActivity {
         name = getIntent().getStringExtra(Constants.NAME_KEY);
         songString = getIntent().getStringExtra(Constants.SONG_KEY);
         wasSaved = getIntent().getBooleanExtra(Constants.SAVED_KEY, false);
+        isFavorite = getIntent().getBooleanExtra(Constants.FAVORITE_KEY, false);
 
         if (name.length() != 0) {
             etSongName.setText(name);
+        }
+
+        if (isFavorite) {
+            btnFavorite.setText("Remove from Favorites");
         }
 
         List<List<Note>> rawSong = Song.convertToRawSong(songString);
@@ -101,7 +105,7 @@ public class ShareActivity extends AppCompatActivity {
         ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(6).playOn(ibPlay);
 
                 new Thread(new Runnable() {
                     @Override
@@ -138,6 +142,7 @@ public class ShareActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnFavorite);
+                actionFavorite();
             }
         });
 
@@ -148,6 +153,15 @@ public class ShareActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void actionFavorite() {
+        isFavorite = !isFavorite;
+        if (isFavorite) {
+            btnFavorite.setText("Remove from Favorites");
+        } else {
+            btnFavorite.setText("Add to Favorites");
+        }
     }
 
     private void changeFieldOptions() {
@@ -162,7 +176,7 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     private void saveSongFirebase(User user, String songString, String songName) {
-        SongReference songReference = new SongReference(user, songName, songString, date, currentTime, false);
+        SongReference songReference = new SongReference(user, songName, songString, date, currentTime, isFavorite);
 
         db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override

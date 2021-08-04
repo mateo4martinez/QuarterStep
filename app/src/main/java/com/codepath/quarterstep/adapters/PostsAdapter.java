@@ -93,7 +93,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             ibPlay.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+                    YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(6).playOn(ibPlay);
 
                     new Thread(new Runnable() {
                         @Override
