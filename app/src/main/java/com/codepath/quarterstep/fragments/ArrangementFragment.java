@@ -155,7 +155,6 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 intent.putExtra(Constants.SAVED_KEY, wasSaved);
                 wasSaved = false;
                 startActivity(intent);
-                getActivity().finish();
             }
         });
 

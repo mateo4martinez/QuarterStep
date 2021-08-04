@@ -29,7 +29,9 @@
         android:layout_marginEnd="50dp"
         android:layout_marginTop="15dp"
         android:layout_marginBottom="15dp"
-        android:src="@drawable/default_icon"
+        android:scaleType="centerCrop"
+        android:backgroundTint="@color/bluegreen"
+        android:src="@drawable/ic_baseline_play_circle_filled_24"
         />
 
     <EditText
@@ -123,7 +125,6 @@
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="20dp"
-        android:paddingBottom="10dp"
         android:backgroundTint="@color/orange_active"
         android:gravity="center"
         android:text="Add to Favorites"
@@ -142,6 +143,19 @@
         android:gravity="center"
         android:text="Share"
         android:textSize="18dp"
+        />
+
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="60dp"
+        android:layout_height="wrap_content"
+        android:layout_toStartOf="@+id/ibPlay"
+        android:layout_alignTop="@+id/ibPlay"
+        android:layout_alignBottom="@id/ibPlay"
+        android:layout_marginTop="25dp"
+        android:layout_marginBottom="25dp"
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:backgroundTint="@color/orange_active"
         />
 
 </RelativeLayout>

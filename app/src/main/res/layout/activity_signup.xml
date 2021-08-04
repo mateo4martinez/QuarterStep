@@ -14,7 +14,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="100dp"
         android:text="Sign up"
-        android:textColor="@color/white"
+        android:textColor="@color/orange_active"
         android:textSize="35dp" />
 
     <EditText
@@ -105,16 +105,15 @@
         android:textSize="15dp"
         android:backgroundTint="@color/aqua" />
 
-    <Button
-        android:id="@+id/btnBack"
-        android:layout_width="wrap_content"
-        android:layout_height="60dp"
+    <ImageButton
+        android:id="@+id/ibBack"
+        android:layout_width="70dp"
+        android:layout_height="50dp"
         android:layout_below="@+id/btnSignup"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="20dp"
         android:layout_centerHorizontal="true"
-        android:text="Go back"
-        android:textColor="@color/white"
-        android:textSize="12dp"
-        android:backgroundTint="@color/orange_active"/>
+        android:src="@drawable/ic_baseline_arrow_back_24"
+        android:backgroundTint="@color/orange_active"
+        />
 
 </RelativeLayout>

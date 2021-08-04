@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
@@ -45,7 +46,7 @@ public class SignupActivity extends AppCompatActivity {
     private EditText etPassword;
     private EditText etEmail;
     private Button btnSignup;
-    private Button btnBack;
+    private ImageButton ibBack;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
@@ -60,7 +61,7 @@ public class SignupActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.etPassword);
         etEmail = findViewById(R.id.etEmail);
         btnSignup = findViewById(R.id.btnSignup);
-        btnBack = findViewById(R.id.btnBack);
+        ibBack = findViewById(R.id.ibBack);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -77,10 +78,10 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        btnBack.setOnClickListener(new View.OnClickListener() {
+        ibBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnBack);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibBack);
                 finish();
             }
         });

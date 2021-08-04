@@ -45,6 +45,7 @@ public class ShareActivity extends AppCompatActivity {
 
     private ImageView ivImage;
     private ImageButton ibPlay;
+    private ImageButton ibBack;
     private EditText etSongName;
     private TextView tvCreatedAt;
     private EditText etCharacteristics;
@@ -69,6 +70,7 @@ public class ShareActivity extends AppCompatActivity {
 
         ivImage = findViewById(R.id.ivImage);
         ibPlay = findViewById(R.id.ibPlay);
+        ibBack = findViewById(R.id.ibBack);
         etSongName = findViewById(R.id.etSongName);
         tvCreatedAt = findViewById(R.id.tvCreatedAt);
         etCharacteristics = findViewById(R.id.etCharacteristics);
@@ -141,6 +143,14 @@ public class ShareActivity extends AppCompatActivity {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnFavorite);
             }
         });
+
+        ibBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibBack);
+                finish();
+            }
+        });
     }
 
     private void saveSongFirebase(User user, String songString, String songName) {
@@ -166,17 +176,12 @@ public class ShareActivity extends AppCompatActivity {
             public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
                     Log.i(TAG, "Uploading post to firebase success!");
-                    goMainActivity();
+                    finish();
                 } else {
                     Log.e(TAG, "Issue with uploading post.", task.getException());
                 }
             }
         });
-    }
-
-    private void goMainActivity() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
     private SongPlayer buildSongPlayer() {
