@@ -18,9 +18,9 @@ public class Constants {
 
     // Ints
         public static final int NUM_NOTES = 24;
-        public static final int NUM_BEATS = 17;
+        public static final int NUM_BEATS = 12;
         public static final int NUM_ROWS = NUM_NOTES;
-        public static final int NUM_COLS = NUM_BEATS;
+        public static final int NUM_COLS = NUM_BEATS + 1;
         public static final long NOTE_DELAY = 400;
 
     // Strings
@@ -226,7 +226,7 @@ public class Constants {
         SOUNDPOOL.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                Log.i("SOUNDPOOL", "Loading complete!" + context.getClass().getSimpleName());
+                Log.i("SOUNDPOOL", "Loading complete! Class: " + context.getClass().getSimpleName());
             }
         });
     }

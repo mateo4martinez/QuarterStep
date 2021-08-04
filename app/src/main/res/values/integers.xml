@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <integer name="numGridCols">17</integer>
+    <integer name="numGridCols">13</integer>
 </resources>
