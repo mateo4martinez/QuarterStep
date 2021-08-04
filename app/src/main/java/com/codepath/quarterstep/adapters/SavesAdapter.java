@@ -1,6 +1,7 @@
 package com.codepath.quarterstep.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.codepath.quarterstep.R;
+import com.codepath.quarterstep.activities.ShareActivity;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.models.SongReference;
@@ -86,6 +88,19 @@ public class SavesAdapter extends BaseAdapter {
                 } catch (InterruptedException e) {
                     Log.e(TAG, "Issue with playing song from save layout.", e);
                 }
+            }
+        });
+
+        convertView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(context, ShareActivity.class);
+                intent.putExtra(Constants.NAME_KEY, reference.getName());
+                intent.putExtra(Constants.SONG_KEY, reference.getSongString());
+                intent.putExtra(Constants.SAVED_KEY, true);
+
+                context.startActivity(intent);
+                return true;
             }
         });
 
