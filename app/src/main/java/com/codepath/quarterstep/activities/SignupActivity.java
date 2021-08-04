@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -57,11 +59,14 @@ public class SignupActivity extends AppCompatActivity {
 
         etFirstName = findViewById(R.id.etFirstName);
         etLastName = findViewById(R.id.etLastName);
+        etEmail = findViewById(R.id.etEmail);
         etUsername = findViewById(R.id.etUsername);
         etPassword = findViewById(R.id.etPassword);
-        etEmail = findViewById(R.id.etEmail);
         btnSignup = findViewById(R.id.btnSignup);
         ibBack = findViewById(R.id.ibBack);
+
+        // User can click enter and be done with edit text fields
+        changeFieldOptions();
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -87,7 +92,23 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
-    public void firebaseSignup(String username, String fname, String lname, String email, String password) {
+    private void changeFieldOptions() {
+        int imeOptions = EditorInfo.IME_ACTION_DONE;
+        int inputType = InputType.TYPE_CLASS_TEXT;
+
+        etFirstName.setImeOptions(imeOptions);
+        etLastName.setImeOptions(imeOptions);
+        etEmail.setImeOptions(imeOptions);
+        etUsername.setImeOptions(imeOptions);
+        etPassword.setImeOptions(imeOptions);
+
+        etFirstName.setRawInputType(inputType);
+        etLastName.setRawInputType(inputType);
+        etEmail.setRawInputType(inputType);
+        etUsername.setRawInputType(inputType);
+    }
+
+    private void firebaseSignup(String username, String fname, String lname, String email, String password) {
         mAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -102,7 +123,7 @@ public class SignupActivity extends AppCompatActivity {
                 });
     }
 
-    public void firebaseLogin(String username, String fname, String lname, String email, String password) {
+    private void firebaseLogin(String username, String fname, String lname, String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
@@ -125,43 +146,6 @@ public class SignupActivity extends AppCompatActivity {
                         }
                     }
                 });
-    }
-
-    private void signupUser(String firstName, String lastName, String username, String password, String email) {
-        ParseUser user = new ParseUser();
-
-        user.put(KEY_FIRST, firstName);
-        user.put(KEY_LAST, lastName);
-        user.setUsername(username);
-        user.setPassword(password);
-        user.setEmail(email);
-
-        user.signUpInBackground(new SignUpCallback() {
-            @Override
-            public void done(ParseException e) {
-                if (e != null) {
-                    Log.e(TAG, "Signing up went wrong", e);
-                    return;
-                }
-                loginUser(username, password);
-            }
-        });
-    }
-
-    private void loginUser(String username, String password) {
-        ParseUser.logInInBackground(username, password, new LogInCallback() {
-            @Override
-            public void done(ParseUser user, ParseException e) {
-                if (user != null) {
-                    goMainActivity();
-                }
-                else {
-                    Log.e(TAG, "Issue with login", e);
-                    Toast.makeText(SignupActivity.this, "Issue with login.", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-            }
-        });
     }
 
     private void goMainActivity() {

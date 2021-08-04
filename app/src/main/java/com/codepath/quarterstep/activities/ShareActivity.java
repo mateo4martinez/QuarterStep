@@ -79,10 +79,7 @@ public class ShareActivity extends AppCompatActivity {
         btnShare = findViewById(R.id.btnShare);
 
         // User can click enter and be done with edit text field instead of creating a newline
-        etCharacteristics.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        etCharacteristics.setRawInputType(InputType.TYPE_CLASS_TEXT);
-        etCaption.setImeOptions(EditorInfo.IME_ACTION_DONE);
-        etCaption.setRawInputType(InputType.TYPE_CLASS_TEXT);
+        changeFieldOptions();
 
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         date = dateFormat.format(currentTime);
@@ -151,6 +148,17 @@ public class ShareActivity extends AppCompatActivity {
                 finish();
             }
         });
+    }
+
+    private void changeFieldOptions() {
+        int info = Constants.IME_ACTION_DONE;
+        int inputType = Constants.INPUT_TYPE_TEXT;
+
+        etCharacteristics.setImeOptions(info);
+        etCaption.setImeOptions(info);
+
+        etCharacteristics.setRawInputType(inputType);
+        etCaption.setRawInputType(inputType);
     }
 
     private void saveSongFirebase(User user, String songString, String songName) {

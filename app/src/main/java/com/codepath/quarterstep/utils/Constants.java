@@ -4,7 +4,9 @@ import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
 import android.media.SoundPool;
+import android.text.InputType;
 import android.util.Log;
+import android.view.inputmethod.EditorInfo;
 
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.User;
@@ -21,6 +23,8 @@ public class Constants {
         public static final int NUM_BEATS = 12;
         public static final int NUM_ROWS = NUM_NOTES;
         public static final int NUM_COLS = NUM_BEATS + 1;
+        public static final int IME_ACTION_DONE = EditorInfo.IME_ACTION_DONE;
+        public static final int INPUT_TYPE_TEXT = InputType.TYPE_CLASS_TEXT;
         public static final long NOTE_DELAY = 400;
 
     // Strings

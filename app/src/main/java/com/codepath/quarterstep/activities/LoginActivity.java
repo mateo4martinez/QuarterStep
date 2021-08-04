@@ -5,8 +5,10 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -31,7 +33,7 @@ public class LoginActivity extends AppCompatActivity {
     public static final String TAG = "LoginActivity";
 
     private ImageView ivLogo;
-    private EditText etUsername;
+    private EditText etEmail;
     private EditText etPassword;
     private Button btnLogin;
     private Button btnSignup;
@@ -42,8 +44,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         mAuth = FirebaseAuth.getInstance();
+
         // Check if firebase user is already logged in
         if (mAuth.getCurrentUser() != null) {
             String uid = mAuth.getCurrentUser().getUid();
@@ -68,10 +70,13 @@ public class LoginActivity extends AppCompatActivity {
         }
 
         ivLogo = findViewById(R.id.ivLogo);
-        etUsername = findViewById(R.id.etUsername);
+        etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
         btnLogin = findViewById(R.id.btnLogin);
         btnSignup = findViewById(R.id.btnSignup);
+
+        // User can click enter and be done with edit text fields
+        changeFieldOptions();
 
         Glide.with(getApplicationContext()).load(R.drawable.qs_logo).into(ivLogo);
 
@@ -79,9 +84,8 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnLogin);
-                String username = etUsername.getText().toString();
+                String email = etEmail.getText().toString();
                 String password = etPassword.getText().toString();
-                String email = etUsername.getText().toString(); // pass instead of username in future
                 firebaseLogin(email, password);
             }
         });
@@ -95,7 +99,17 @@ public class LoginActivity extends AppCompatActivity {
         });
     }
 
-    public void firebaseLogin(String email, String password) {
+    private void changeFieldOptions() {
+        int imeOptions = Constants.IME_ACTION_DONE;
+        int inputType = Constants.INPUT_TYPE_TEXT;
+
+        etEmail.setImeOptions(imeOptions);
+        etPassword.setImeOptions(imeOptions);
+
+        etEmail.setRawInputType(inputType);
+    }
+
+    private void firebaseLogin(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
