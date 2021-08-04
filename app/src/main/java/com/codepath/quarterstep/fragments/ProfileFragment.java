@@ -23,6 +23,8 @@ import com.codepath.quarterstep.models.SongReference;
 import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -83,6 +85,7 @@ public class ProfileFragment extends ScreenSlidePageFragment {
         btnLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnLogout);
                 mAuth.signOut();
                 Constants.currentUser = new User();
                 startActivity(new Intent(getActivity(), LoginActivity.class));

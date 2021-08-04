@@ -18,6 +18,8 @@ import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.models.SongReference;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.SongPlayer;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 
 import java.util.List;
 
@@ -83,11 +85,18 @@ public class SavesAdapter extends BaseAdapter {
         ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    songPlayer.playSong();
-                } catch (InterruptedException e) {
-                    Log.e(TAG, "Issue with playing song from save layout.", e);
-                }
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            songPlayer.playSong();
+                        } catch (InterruptedException e) {
+                            Log.e(TAG, "Issue with playing song from save layout.", e);
+                        }
+                    }
+                }).start();
             }
         });
 

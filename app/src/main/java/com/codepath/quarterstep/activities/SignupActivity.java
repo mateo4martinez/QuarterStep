@@ -14,6 +14,8 @@ import android.widget.Toast;
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -65,6 +67,7 @@ public class SignupActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnSignup);
                 String firstName = etFirstName.getText().toString();
                 String lastName = etLastName.getText().toString();
                 String username = etUsername.getText().toString();
@@ -77,6 +80,7 @@ public class SignupActivity extends AppCompatActivity {
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnBack);
                 finish();
             }
         });

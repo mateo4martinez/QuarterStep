@@ -16,6 +16,8 @@ import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -76,6 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnLogin);
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String email = etUsername.getText().toString(); // pass instead of username in future
@@ -86,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
         btnSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnSignup);
                 goSignupActivity();
             }
         });

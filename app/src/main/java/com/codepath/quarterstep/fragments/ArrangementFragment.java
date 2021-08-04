@@ -26,6 +26,8 @@ import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.ScreenSlidePageFragment;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.codepath.quarterstep.views.ArrangementView;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -93,6 +95,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Note note = adapterArray.get(position);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(view);
                 selectNote(note);
 
                 notesAdapter.notifyDataSetChanged();
@@ -102,20 +105,28 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(btnPlay);
                 Song song = new Song(avNotes.getGrid());
                 songPlayer.addSong(song);
 
-                try {
-                    songPlayer.playSong();
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            songPlayer.playSong();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }).start();
             }
         });
 
         btnClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnClear);
+                YoYo.with(Techniques.Shake).duration(Constants.NOTE_DELAY * 2).playOn(avNotes);
                 for (int i = 0; i < adapterArray.size(); i++) {
                     Note note = adapterArray.get(i);
                     if (note.isPlayable()) {
@@ -131,11 +142,12 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnShare);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 Intent intent = new Intent(getActivity(), ShareActivity.class);
                 String songName = "";
-                if (etSongName.getText().toString().length() != 0) {
+                if (etSongName.getText().toString().length() != 0) { // add length error handling here
                     songName = etSongName.getText().toString();
                 }
                 intent.putExtra(Constants.NAME_KEY, songName);
@@ -150,6 +162,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnSave);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 String songName = etSongName.getText().toString(); // add length error handling here

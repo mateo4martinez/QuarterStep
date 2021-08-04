@@ -25,6 +25,8 @@ import com.codepath.quarterstep.models.SongReference;
 import com.codepath.quarterstep.models.User;
 import com.codepath.quarterstep.utils.Constants;
 import com.codepath.quarterstep.utils.SongPlayer;
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.DocumentReference;
@@ -100,17 +102,25 @@ public class ShareActivity extends AppCompatActivity {
         ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                    songPlayer.playSong();
-                } catch (InterruptedException e) {
-                    Log.e(TAG, "Issue with playing song.", e);
-                }
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        try {
+                            songPlayer.playSong();
+                        } catch (InterruptedException e) {
+                            Log.e(TAG, "Issue with playing song.", e);
+                        }
+                    }
+                }).start();
             }
         });
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnShare);
                 User user = Constants.currentUser;
                 String songName = etSongName.getText().toString(); // add length error handling here
 
@@ -122,6 +132,13 @@ public class ShareActivity extends AppCompatActivity {
                 String caption = etCaption.getText().toString(); // and here too
 
                 savePostFirebase(user, songString, songName, caption, characteristics);
+            }
+        });
+
+        btnFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnFavorite);
             }
         });
     }
