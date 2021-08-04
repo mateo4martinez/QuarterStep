@@ -38,6 +38,8 @@
         android:textSize="18sp"
         android:textColor="@color/orange_active"
         android:textStyle="bold"
+        android:ellipsize="marquee"
+        android:scrollHorizontally="true"
         />
 
     <TextView
@@ -51,6 +53,7 @@
         android:gravity="center"
         android:text="Example Date"
         android:textColor="@color/grey_active"
+        android:textSize="12sp"
         />
 
 </RelativeLayout>

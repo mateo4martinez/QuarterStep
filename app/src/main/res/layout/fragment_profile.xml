@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="My Profile"
-        android:textSize="40dp"
+        android:textSize="25sp"
         android:textColor="@color/orange_active"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
@@ -93,12 +93,26 @@
         android:textSize="18sp"
         />
 
+    <TextView
+        android:id="@+id/tvSongsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tvEmailTitle"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="5dp"
+        android:text="My Songs"
+        android:textColor="@color/orange_active"
+        android:textSize="25sp"
+        />
+
     <GridView
         android:id="@+id/gvSongs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/tvEmailTitle"
+        android:layout_below="@+id/tvSongsTitle"
         android:layout_above="@+id/btnLogout"
+        android:layout_marginEnd="20dp"
+        android:layout_marginStart="20dp"
         android:layout_marginTop="10dp"
         android:layout_marginBottom="5dp"
         android:gravity="center"

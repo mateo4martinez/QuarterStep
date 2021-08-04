@@ -7,6 +7,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -114,6 +115,10 @@ public class ProfileFragment extends ScreenSlidePageFragment {
 
                     allSongs.addAll(lst);
                     adapter.notifyDataSetChanged();
+                    Log.i(TAG, allSongs.toString());
+                    Log.i(TAG, "Querying saved user songs success!");
+                } else {
+                    Log.e(TAG, "Issue with querying saved songs.", task.getException());
                 }
             }
         });

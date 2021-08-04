@@ -19,6 +19,7 @@ public class SongReference {
         this.name = name;
         this.songString = songString;
         this.createdAt = createdAt;
+        this.timestamp = timestamp;
         this.favorite = favorite;
     }
 
@@ -54,8 +55,12 @@ public class SongReference {
         this.createdAt = createdAt;
     }
 
-    private Date getTimestamp() {
+    public Date getTimestamp() {
         return this.timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 
     public boolean isFavorite() {

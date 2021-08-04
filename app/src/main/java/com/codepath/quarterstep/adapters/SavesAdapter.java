@@ -50,16 +50,6 @@ public class SavesAdapter extends BaseAdapter {
     }
 
     @Override
-    public int getViewTypeCount() {
-        return getCount();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return position;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         SongReference reference = songs.get(position);
 

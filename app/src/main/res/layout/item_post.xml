@@ -89,7 +89,6 @@
             android:textColor="@color/orange_active"
             android:textStyle="bold"
             android:textSize="18sp"
-            android:layout_marginStart="5dp"
             android:layout_marginBottom="10dp"
             />
 
