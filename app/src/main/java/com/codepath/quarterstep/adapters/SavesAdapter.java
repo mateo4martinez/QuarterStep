@@ -3,7 +3,9 @@ package com.codepath.quarterstep.adapters;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -11,27 +13,34 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.activities.ShareActivity;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.models.SongReference;
 import com.codepath.quarterstep.utils.Constants;
+import com.codepath.quarterstep.utils.DoubleClickListener;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
 
 public class SavesAdapter extends BaseAdapter {
     public static final String TAG = "SavesAdapter";
 
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private Context context;
     private List<SongReference> songs;
+    private List<DocumentSnapshot> docs;
 
-    public SavesAdapter(Context context, List<SongReference> songs) {
+    public SavesAdapter(Context context, List<SongReference> songs, List<DocumentSnapshot> docs) {
         this.context = context;
         this.songs = songs;
+        this.docs = docs;
     }
 
     @Override
@@ -51,6 +60,7 @@ public class SavesAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        DocumentSnapshot doc = docs.get(position);
         SongReference reference = songs.get(position);
 
         if (convertView == null) {
@@ -66,16 +76,49 @@ public class SavesAdapter extends BaseAdapter {
         tvSongName.setText(reference.getName());
         tvCreatedAt.setText(reference.getCreatedAt());
 
+        if (reference.isFavorite()) {
+            Glide.with(context).load(R.drawable.favorite_filled).into(ivFavorite);
+        } else {
+            Glide.with(context).load(R.drawable.favorite_border).into(ivFavorite);
+        }
+
         // Create song object
         String songString = reference.getSongString();
         List<List<Note>> rawSong = Song.convertToRawSong(songString);
         Song song = new Song(rawSong);
         SongPlayer songPlayer = new SongPlayer(context, Constants.SOUNDPOOL, song);
 
-        ibPlay.setOnClickListener(new View.OnClickListener() {
+        ibPlay.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
-            public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+            public boolean onLongClick(View v) {
+                Intent intent = new Intent(context, ShareActivity.class);
+                intent.putExtra(Constants.NAME_KEY, reference.getName());
+                intent.putExtra(Constants.SONG_KEY, reference.getSongString());
+                intent.putExtra(Constants.SAVED_KEY, true);
+                intent.putExtra(Constants.FAVORITE_KEY, reference.isFavorite());
+
+                context.startActivity(intent);
+                return true;
+            }
+        });
+
+        ibPlay.setOnClickListener(new DoubleClickListener() {
+            @Override
+            public void onDoubleClick() {
+                reference.actionFavorite();
+                if (reference.isFavorite()) {
+                    Glide.with(context).load(R.drawable.favorite_filled).into(ivFavorite);
+                    db.collection("songs").document(doc.getId()).set(reference);
+                } else {
+                    Glide.with(context).load(R.drawable.favorite_border).into(ivFavorite);
+                    db.collection("songs").document(doc.getId()).set(reference);
+                }
+                notifyDataSetChanged();
+            }
+
+            @Override
+            public void onSingleClick() {
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(6).playOn(ibPlay);
 
                 new Thread(new Runnable() {
                     @Override
@@ -97,6 +140,7 @@ public class SavesAdapter extends BaseAdapter {
                 intent.putExtra(Constants.NAME_KEY, reference.getName());
                 intent.putExtra(Constants.SONG_KEY, reference.getSongString());
                 intent.putExtra(Constants.SAVED_KEY, true);
+                intent.putExtra(Constants.FAVORITE_KEY, reference.isFavorite());
 
                 context.startActivity(intent);
                 return true;
@@ -108,11 +152,13 @@ public class SavesAdapter extends BaseAdapter {
 
     public void clear() {
         songs.clear();
+        docs.clear();
         notifyDataSetChanged();
     }
 
-    public void addAll(List<SongReference> list) {
-        songs.addAll(list);
+    public void addAll(List<SongReference> list1, List<DocumentSnapshot> list2) {
+        songs.addAll(list1);
+        docs.addAll(list2);
         notifyDataSetChanged();
     }
 }

@@ -153,6 +153,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 intent.putExtra(Constants.NAME_KEY, songName);
                 intent.putExtra(Constants.SONG_KEY, songString);
                 intent.putExtra(Constants.SAVED_KEY, wasSaved);
+                intent.putExtra(Constants.FAVORITE_KEY, false); // Send default favorite key
                 wasSaved = false;
                 startActivity(intent);
             }

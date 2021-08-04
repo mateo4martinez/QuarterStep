@@ -49,6 +49,7 @@ public class ProfileFragment extends ScreenSlidePageFragment {
     private GridView gvSongs;
     private SavesAdapter adapter;
     private List<SongReference> allSongs;
+    private List<DocumentSnapshot> allDocs;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private User currentUser = Constants.currentUser;
@@ -75,12 +76,13 @@ public class ProfileFragment extends ScreenSlidePageFragment {
         tvEmail = view.findViewById(R.id.tvEmail);
         gvSongs = view.findViewById(R.id.gvSongs);
         allSongs = new ArrayList<>();
+        allDocs = new ArrayList<>();
 
         tvUsername.setText("@" + currentUser.getUsername());
         tvName.setText(currentUser.getFname() + " " + currentUser.getLname());
         tvEmail.setText(currentUser.getEmail());
 
-        adapter = new SavesAdapter(getContext(), allSongs);
+        adapter = new SavesAdapter(getContext(), allSongs, allDocs);
         gvSongs.setAdapter(adapter);
 
         btnLogout.setOnClickListener(new View.OnClickListener() {
@@ -114,6 +116,7 @@ public class ProfileFragment extends ScreenSlidePageFragment {
                     }
 
                     allSongs.addAll(lst);
+                    allDocs.addAll(documents);
                     adapter.notifyDataSetChanged();
                     Log.i(TAG, allSongs.toString());
                     Log.i(TAG, "Querying saved user songs success!");
