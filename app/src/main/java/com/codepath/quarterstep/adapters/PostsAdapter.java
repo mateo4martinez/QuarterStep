@@ -1,6 +1,7 @@
 package com.codepath.quarterstep.adapters;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -94,7 +95,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                     try {
                         songPlayer.playSong();
                     } catch (InterruptedException e) {
-                        e.printStackTrace();
+                        Log.e(TAG, "Issue with playing song from post.", e);
                     }
                 }
             });
