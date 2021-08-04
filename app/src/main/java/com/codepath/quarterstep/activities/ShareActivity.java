@@ -127,7 +127,7 @@ public class ShareActivity extends AppCompatActivity {
     }
 
     private void saveSongFirebase(User user, String songString, String songName) {
-        SongReference songReference = new SongReference(user, songName, songString, date, false);
+        SongReference songReference = new SongReference(user, songName, songString, date, currentTime, false);
 
         db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override

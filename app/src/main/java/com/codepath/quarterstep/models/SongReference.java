@@ -1,17 +1,20 @@
 package com.codepath.quarterstep.models;
 
+import java.util.Date;
+
 public class SongReference {
     private User user;
     private String name;
     private String songString;
     private String createdAt;
+    private Date timestamp;
     private boolean favorite;
 
     public SongReference() {
         // must have a public no-argument constructor for firebase
     }
 
-    public SongReference(User user, String name, String songString, String createdAt, boolean favorite) {
+    public SongReference(User user, String name, String songString, String createdAt, Date timestamp, boolean favorite) {
         this.user = user;
         this.name = name;
         this.songString = songString;
@@ -49,6 +52,10 @@ public class SongReference {
 
     public void setCreatedAt(String createdAt) {
         this.createdAt = createdAt;
+    }
+
+    private Date getTimestamp() {
+        return this.timestamp;
     }
 
     public boolean isFavorite() {

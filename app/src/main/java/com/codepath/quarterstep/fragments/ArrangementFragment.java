@@ -163,9 +163,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
 
     private void saveSong(User user, String songString, String songName) {
         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        String date = dateFormat.format(Calendar.getInstance().getTime());
+        Date timestamp = Calendar.getInstance().getTime();
+        String date = dateFormat.format(timestamp);
 
-        SongReference songReference = new SongReference(user, songName, songString, date, false);
+        SongReference songReference = new SongReference(user, songName, songString, date, timestamp, false);
 
         db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
             @Override

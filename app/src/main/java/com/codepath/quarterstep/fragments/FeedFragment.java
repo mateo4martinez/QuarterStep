@@ -68,7 +68,7 @@ public class FeedFragment extends ScreenSlidePageFragment {
         scrollListener = new EndlessRecyclerViewScrollListener(linearLayoutManager) {
             @Override
             public void onLoadMore(int page, int totalItemsCount, RecyclerView view) {
-                //queryMorePosts();
+                queryPostsFirebase();
             }
         };
 
