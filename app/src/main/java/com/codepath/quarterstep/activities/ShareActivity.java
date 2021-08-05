@@ -159,9 +159,48 @@ public class ShareActivity extends AppCompatActivity {
         });
     }
 
+    private void saveSongFirebase(User user, String songString, String songName, boolean isFavorite) {
+        SongReference songReference = new SongReference(user, songName, songString, date, currentTime, isFavorite);
+
+        db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "Saving song to firebase success!");
+                } else {
+                    Log.e(TAG, "Issue with saving song.", task.getException());
+                }
+            }
+        });
+    }
+
+    private void savePostFirebase(User user, String songString, String name, String caption, String characteristics) {
+        Post postReference = new Post(user, songString, name, caption, characteristics, currentTime);
+
+        db.collection("posts").add(postReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
+            @Override
+            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
+                if (task.isSuccessful()) {
+                    Log.i(TAG, "Uploading post to firebase success!");
+                    goMainActivity();
+                } else {
+                    Log.e(TAG, "Issue with uploading post.", task.getException());
+                }
+            }
+        });
+    }
+
     private void updateSong(boolean isFavorite) {
         String docId = getIntent().getStringExtra(Constants.DOC_ID_KEY);
         db.collection("songs").document(docId).update(Map.of("favorite", isFavorite));
+    }
+
+    private SongPlayer buildSongPlayer() {
+        // must set audioManager here since this is a different activity
+        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
+
+        return new SongPlayer(this, Constants.SOUNDPOOL);
     }
 
     private void actionFavorite() {
@@ -184,42 +223,10 @@ public class ShareActivity extends AppCompatActivity {
         etCaption.setRawInputType(inputType);
     }
 
-    private void saveSongFirebase(User user, String songString, String songName, boolean isFavorite) {
-        SongReference songReference = new SongReference(user, songName, songString, date, currentTime, isFavorite);
-
-        db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "Saving song to firebase success!");
-                } else {
-                    Log.e(TAG, "Issue with saving song.", task.getException());
-                }
-            }
-        });
-    }
-
-    public void savePostFirebase(User user, String songString, String name, String caption, String characteristics) {
-        Post postReference = new Post(user, songString, name, caption, characteristics, currentTime);
-
-        db.collection("posts").add(postReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {
-            @Override
-            public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
-                if (task.isSuccessful()) {
-                    Log.i(TAG, "Uploading post to firebase success!");
-                    finish();
-                } else {
-                    Log.e(TAG, "Issue with uploading post.", task.getException());
-                }
-            }
-        });
-    }
-
-    private SongPlayer buildSongPlayer() {
-        // must set audioManager here since this is a different activity
-        AudioManager audioManager = (AudioManager) getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setStreamVolume(AudioManager.STREAM_MUSIC, audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC), 0);
-
-        return new SongPlayer(this, Constants.SOUNDPOOL);
+    private void goMainActivity() {
+        MainActivity.mainActivity.finish();
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

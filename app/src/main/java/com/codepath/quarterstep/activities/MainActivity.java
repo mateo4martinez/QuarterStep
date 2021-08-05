@@ -38,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mainActivity = this;
+
         Constants.LOAD_SOUNDS(this);
         Constants.SET_AUDIO_MANAGER(this);
 
