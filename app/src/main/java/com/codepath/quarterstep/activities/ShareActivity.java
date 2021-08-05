@@ -39,6 +39,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 public class ShareActivity extends AppCompatActivity {
     public static final String TAG = "ShareActivity";
@@ -88,6 +89,7 @@ public class ShareActivity extends AppCompatActivity {
         songString = getIntent().getStringExtra(Constants.SONG_KEY);
         wasSaved = getIntent().getBooleanExtra(Constants.SAVED_KEY, false);
         isFavorite = getIntent().getBooleanExtra(Constants.FAVORITE_KEY, false);
+        final boolean initialFavoriteStatus = isFavorite;
 
         if (name.length() != 0) {
             etSongName.setText(name);
@@ -127,8 +129,10 @@ public class ShareActivity extends AppCompatActivity {
                 User user = Constants.currentUser;
                 String songName = etSongName.getText().toString(); // add length error handling here
 
-                if (!name.equals(songName) || !wasSaved) { // user changed name or has not saved song
-                    saveSongFirebase(user, songString, songName);
+                if (!name.equals(songName) || !wasSaved) {
+                    saveSongFirebase(user, songString, songName, isFavorite);
+                } else if (initialFavoriteStatus != isFavorite) {
+                    updateSong(isFavorite);
                 }
 
                 String characteristics = etCharacteristics.getText().toString(); // add length error handling here
@@ -155,6 +159,11 @@ public class ShareActivity extends AppCompatActivity {
         });
     }
 
+    private void updateSong(boolean isFavorite) {
+        String docId = getIntent().getStringExtra(Constants.DOC_ID_KEY);
+        db.collection("songs").document(docId).update(Map.of("favorite", isFavorite));
+    }
+
     private void actionFavorite() {
         isFavorite = !isFavorite;
         if (isFavorite) {
@@ -175,7 +184,7 @@ public class ShareActivity extends AppCompatActivity {
         etCaption.setRawInputType(inputType);
     }
 
-    private void saveSongFirebase(User user, String songString, String songName) {
+    private void saveSongFirebase(User user, String songString, String songName, boolean isFavorite) {
         SongReference songReference = new SongReference(user, songName, songString, date, currentTime, isFavorite);
 
         db.collection("songs").add(songReference).addOnCompleteListener(new OnCompleteListener<DocumentReference>() {

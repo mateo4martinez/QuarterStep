@@ -28,6 +28,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.List;
+import java.util.Map;
 
 public class SavesAdapter extends BaseAdapter {
     public static final String TAG = "SavesAdapter";
@@ -96,6 +97,7 @@ public class SavesAdapter extends BaseAdapter {
                 intent.putExtra(Constants.SONG_KEY, reference.getSongString());
                 intent.putExtra(Constants.SAVED_KEY, true);
                 intent.putExtra(Constants.FAVORITE_KEY, reference.isFavorite());
+                intent.putExtra(Constants.DOC_ID_KEY, doc.getId());
 
                 context.startActivity(intent);
                 return true;
@@ -108,10 +110,10 @@ public class SavesAdapter extends BaseAdapter {
                 reference.actionFavorite();
                 if (reference.isFavorite()) {
                     Glide.with(context).load(R.drawable.favorite_filled).into(ivFavorite);
-                    db.collection("songs").document(doc.getId()).set(reference);
+                    db.collection("songs").document(doc.getId()).update(Map.of("favorite", true));
                 } else {
                     Glide.with(context).load(R.drawable.favorite_border).into(ivFavorite);
-                    db.collection("songs").document(doc.getId()).set(reference);
+                    db.collection("songs").document(doc.getId()).update(Map.of("favorite", false));
                 }
                 notifyDataSetChanged();
             }

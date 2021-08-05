@@ -59,6 +59,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private Button btnSave;
     private Button btnClear;
     private boolean wasSaved = false;
+    private Intent intent;
 
     public ArrangementFragment() {
         // Required empty public constructor
@@ -83,6 +84,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         btnClear = view.findViewById(R.id.btnClear);
 
         songPlayer = new SongPlayer(getActivity(), Constants.SOUNDPOOL);
+        intent = new Intent(getActivity(), ShareActivity.class);
 
         avNotes.generateGrid();
         grid = avNotes.getGrid();
@@ -145,7 +147,6 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnShare);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
-                Intent intent = new Intent(getActivity(), ShareActivity.class);
                 String songName = "";
                 if (etSongName.getText().toString().length() != 0) { // add length error handling here
                     songName = etSongName.getText().toString();
@@ -185,6 +186,8 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             @Override
             public void onComplete(@NonNull @NotNull Task<DocumentReference> task) {
                 if (task.isSuccessful()) {
+                    DocumentReference doc = task.getResult();
+                    intent.putExtra(Constants.DOC_ID_KEY, doc.getId());
                     Log.i(TAG, "Saving song to firebase success!");
                 } else {
                     Log.e(TAG, "Issue with saving song.", task.getException());

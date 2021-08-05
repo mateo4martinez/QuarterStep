@@ -32,6 +32,7 @@ public class Constants {
         public static final String SAVED_KEY = "saved";
         public static final String NAME_KEY = "name";
         public static final String FAVORITE_KEY = "favorite";
+        public static final String DOC_ID_KEY = "docid";
 
     // Note Names
         // Octave 3
