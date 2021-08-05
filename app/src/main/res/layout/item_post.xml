@@ -18,8 +18,9 @@
             android:layout_alignParentStart="true"
             android:layout_marginTop="10dp"
             android:layout_marginStart="5dp"
-            android:backgroundTint="@color/darkBluegreen"
-            android:src="@drawable/ic_baseline_play_circle_filled_24"
+            android:background="@drawable/roundedcorner"
+            android:backgroundTint="@color/aqua"
+            android:src="@drawable/play_arrow_filled"
             />
 
         <TextView
@@ -32,6 +33,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginEnd="5dp"
             android:text="username"
+            android:textSize="17sp"
             android:textStyle="bold"
             android:textColor="@color/white"
             />
@@ -60,7 +62,7 @@
             android:layout_marginTop="5dp"
             android:text="This is my caption!"
             android:textColor="@color/white"
-            android:textSize="15sp"
+            android:textSize="17sp"
             />
 
         <TextView
@@ -74,7 +76,8 @@
             android:layout_marginTop="5dp"
             android:text="Sounds like: "
             android:textColor="@color/orange_active"
-            android:textSize="15sp"
+            android:textStyle="italic"
+            android:textSize="16sp"
             />
 
         <TextView
@@ -84,6 +87,7 @@
             android:layout_alignStart="@+id/ibPlay"
             android:layout_alignEnd="@+id/ibPlay"
             android:layout_below="@id/ibPlay"
+            android:layout_marginTop="4dp"
             android:text="Untitled"
             android:gravity="center"
             android:textColor="@color/orange_active"

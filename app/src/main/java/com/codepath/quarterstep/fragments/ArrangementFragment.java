@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.codepath.quarterstep.R;
@@ -54,10 +55,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
     private SongPlayer songPlayer;
     private EditText etSongName;
-    private Button btnPlay;
-    private Button btnShare;
-    private Button btnSave;
-    private Button btnClear;
+    private ImageButton ibPlay;
+    private ImageButton ibShare;
+    private ImageButton ibSave;
+    private ImageButton ibClear;
     private boolean wasSaved = false;
     private Intent intent;
 
@@ -78,10 +79,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
 
         avNotes = view.findViewById(R.id.avNotes);
         etSongName = view.findViewById(R.id.etSongName);
-        btnPlay = view.findViewById(R.id.btnPlay);
-        btnShare = view.findViewById(R.id.btnShare);
-        btnSave = view.findViewById(R.id.btnSave);
-        btnClear = view.findViewById(R.id.btnClear);
+        ibPlay = view.findViewById(R.id.ibPlay);
+        ibShare = view.findViewById(R.id.ibShare);
+        ibSave = view.findViewById(R.id.ibSave);
+        ibClear = view.findViewById(R.id.ibClear);
 
         songPlayer = new SongPlayer(getActivity(), Constants.SOUNDPOOL);
         intent = new Intent(getActivity(), ShareActivity.class);
@@ -104,10 +105,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             }
         });
 
-        btnPlay.setOnClickListener(new View.OnClickListener() {
+        ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(btnPlay);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
                 Song song = new Song(avNotes.getGrid());
                 songPlayer.addSong(song);
 
@@ -124,10 +125,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             }
         });
 
-        btnClear.setOnClickListener(new View.OnClickListener() {
+        ibClear.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnClear);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibClear);
                 YoYo.with(Techniques.Shake).duration(Constants.NOTE_DELAY * 2).playOn(avNotes);
                 for (int i = 0; i < adapterArray.size(); i++) {
                     Note note = adapterArray.get(i);
@@ -141,10 +142,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             }
         });
 
-        btnShare.setOnClickListener(new View.OnClickListener() {
+        ibShare.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnShare);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibShare);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 String songName = "";
@@ -160,10 +161,10 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
             }
         });
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        ibSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnSave);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibSave);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 String songName = etSongName.getText().toString(); // add length error handling here

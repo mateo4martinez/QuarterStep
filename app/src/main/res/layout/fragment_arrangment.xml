@@ -16,10 +16,10 @@
         <EditText
             android:id="@+id/etSongName"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="50dp"
             android:gravity="start|top"
-            android:layout_alignStart="@+id/btnClear"
-            android:layout_alignEnd="@+id/btnPlay"
+            android:layout_alignStart="@+id/ibClear"
+            android:layout_alignEnd="@+id/ibPlay"
             android:layout_alignParentTop="true"
             android:hint="Enter a name"
             android:textColorHint="@color/orange_active"
@@ -32,45 +32,57 @@
             android:layout_marginTop="2dp"
             />
 
-        <Button
-            android:id="@+id/btnPlay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <ImageButton
+            android:id="@+id/ibPlay"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
             android:layout_alignParentEnd="true"
             android:layout_below="@+id/etSongName"
             android:layout_marginTop="5dp"
-            android:layout_marginBottom="20dp"
-            android:text="Play"
+            android:layout_marginBottom="10dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/bluegreen"
+            android:background="@drawable/roundedcorner"
+            android:src="@drawable/play_arrow"
             />
 
-        <Button
-            android:id="@+id/btnShare"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/btnPlay"
-            android:layout_alignTop="@+id/btnPlay"
-            android:layout_marginEnd="10dp"
-            android:text="Share"
+        <ImageButton
+            android:id="@+id/ibShare"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@+id/ibPlay"
+            android:layout_alignTop="@+id/ibPlay"
+            android:layout_marginEnd="25dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/darkBluegreen"
+            android:background="@drawable/roundedcorner"
+            android:src="@drawable/baseline_share"
             />
 
-        <Button
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/btnShare"
-            android:layout_alignTop="@+id/btnPlay"
-            android:layout_marginEnd="10dp"
-            android:text="Save"
+        <ImageButton
+            android:id="@+id/ibSave"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@+id/ibShare"
+            android:layout_alignTop="@+id/ibPlay"
+            android:layout_marginEnd="25dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/darkBluegreen"
+            android:background="@drawable/roundedcorner"
+            android:src="@drawable/baseline_save"
             />
 
-        <Button
-            android:id="@+id/btnClear"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_toStartOf="@+id/btnSave"
-            android:layout_alignTop="@+id/btnPlay"
-            android:layout_marginEnd="10dp"
-            android:text="Clear"
+        <ImageButton
+            android:id="@+id/ibClear"
+            android:layout_width="60dp"
+            android:layout_height="50dp"
+            android:layout_toStartOf="@+id/ibSave"
+            android:layout_alignTop="@+id/ibPlay"
+            android:layout_marginEnd="25dp"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/darkBluegreen"
+            android:background="@drawable/roundedcorner"
+            android:src="@drawable/baseline_clear"
             />
 
     </RelativeLayout>

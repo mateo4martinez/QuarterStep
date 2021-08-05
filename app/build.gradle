@@ -67,4 +67,7 @@ dependencies {
     // ApiFuture interface
     compile group: 'com.google.api', name: 'api-common', version: '1.1.0' //Thanks for using https://jar-download.com
 
+    // Glide Rounded Transformations
+    implementation 'jp.wasabeef:glide-transformations:4.1.0'
+    implementation 'jp.co.cyberagent.android:gpuimage:2.0.4'
 }

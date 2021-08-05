@@ -17,6 +17,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Post;
@@ -40,6 +41,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+
+import jp.wasabeef.glide.transformations.RoundedCornersTransformation;
 
 public class ShareActivity extends AppCompatActivity {
     public static final String TAG = "ShareActivity";

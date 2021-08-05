@@ -11,7 +11,7 @@
         android:layout_height="120dp"
         android:scaleType="centerCrop"
         android:background="@color/bluegreen"
-        android:src="@drawable/ic_baseline_play_circle_filled_24"
+        android:src="@drawable/play_arrow_filled"
         />
 
     <ImageView
