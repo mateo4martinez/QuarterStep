@@ -189,7 +189,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
     }
 
     private void saveSong(User user, String songString, String songName) {
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         Date timestamp = Calendar.getInstance().getTime();
         String date = dateFormat.format(timestamp);
 
