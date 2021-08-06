@@ -27,6 +27,8 @@
         android:textSize="20dp"
         android:background="@drawable/rounded_et"
         android:hint="email"
+        android:textColorHint="@color/grey_active"
+        android:textColor="@color/white"
         android:inputType="text"
         android:maxLines="1" />
 
@@ -44,6 +46,8 @@
         android:textSize="20dp"
         android:background="@drawable/rounded_et"
         android:hint="password"
+        android:textColorHint="@color/grey_active"
+        android:textColor="@color/white"
         android:inputType="textPassword"
         android:maxLines="1" />
 
