@@ -21,7 +21,7 @@
             android:layout_alignStart="@+id/ibClear"
             android:layout_alignEnd="@+id/ibPlay"
             android:layout_alignParentTop="true"
-            android:hint="Enter a name"
+            android:hint="What's your song called?"
             android:textColorHint="@color/orange_active"
             android:textSize="20sp"
             android:text=""
