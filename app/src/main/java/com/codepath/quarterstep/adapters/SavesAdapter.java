@@ -110,9 +110,11 @@ public class SavesAdapter extends BaseAdapter {
                 reference.actionFavorite();
                 if (reference.isFavorite()) {
                     Glide.with(context).load(R.drawable.favorite_filled).into(ivFavorite);
+                    YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ivFavorite);
                     db.collection("songs").document(doc.getId()).update(Map.of("favorite", true));
                 } else {
                     Glide.with(context).load(R.drawable.favorite_border).into(ivFavorite);
+                    YoYo.with(Techniques.Shake).duration(Constants.NOTE_DELAY).playOn(ivFavorite);
                     db.collection("songs").document(doc.getId()).update(Map.of("favorite", false));
                 }
                 notifyDataSetChanged();

@@ -71,9 +71,10 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tvCaption"
             android:layout_toEndOf="@+id/ibPlay"
+            android:layout_above="@+id/ibLike"
             android:layout_alignEnd="@+id/tvCreatedAt"
             android:layout_alignStart="@+id/tvUsername"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:text="Sounds like: "
             android:textColor="@color/orange_active"
             android:textStyle="italic"
@@ -94,6 +95,20 @@
             android:textStyle="bold"
             android:textSize="18sp"
             android:layout_marginBottom="10dp"
+            />
+
+        <ImageButton
+            android:id="@+id/ibLike"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toEndOf="@+id/tvSongName"
+            android:layout_alignStart="@+id/tvCharacteristics"
+            android:layout_alignTop="@+id/tvSongName"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/roundedcorner"
+            android:scaleType="fitCenter"
+            android:backgroundTint="@color/darkBluegreen"
+            android:src="@drawable/favorite_border"
             />
 
     </RelativeLayout>

@@ -69,6 +69,8 @@
         app:counterMaxLength="40"
         app:counterTextColor="@color/aqua"
         app:counterOverflowTextColor="@color/red_active"
+        android:textColorHint="@color/grey_active"
+        android:hint="What genre?"
         android:layout_toEndOf="@+id/tvSoundsLike"
         android:layout_below="@+id/tvCreatedAt"
         android:layout_alignTop="@+id/tvSoundsLike"
@@ -79,12 +81,12 @@
             android:id="@+id/etCharacteristics"
             android:layout_width="220dp"
             android:layout_height="match_parent"
-            android:background="@color/white"
+            android:background="@drawable/rounded_et"
             android:gravity="start|top"
-            android:hint="What genre?"
             android:minLines="2"
             android:maxLines="2"
             android:text=""
+            android:textColor="@color/white"
             android:inputType="textMultiLine"
             />
 
@@ -98,6 +100,8 @@
         app:counterMaxLength="100"
         app:counterTextColor="@color/aqua"
         app:counterOverflowTextColor="@color/red_active"
+        android:textColorHint="@color/grey_active"
+        android:hint="Write a caption..."
         android:layout_marginTop="10dp"
         android:layout_below="@+id/counter1"
         android:layout_alignStart="@+id/tvSoundsLike"
@@ -110,11 +114,11 @@
             android:layout_height="wrap_content"
             android:minLines="6"
             android:maxLines="6"
-            android:background="@color/white"
+            android:background="@drawable/rounded_et"
             android:gravity="start|top"
             android:inputType="textMultiLine"
-            android:hint="Write a caption..."
             android:text=""
+            android:textColor="@color/white"
             />
 
     </com.google.android.material.textfield.TextInputLayout>

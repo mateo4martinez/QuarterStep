@@ -11,11 +11,13 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
 import com.codepath.quarterstep.models.Note;
 import com.codepath.quarterstep.models.Post;
 import com.codepath.quarterstep.models.Song;
 import com.codepath.quarterstep.utils.Constants;
+import com.codepath.quarterstep.utils.DoubleClickListener;
 import com.codepath.quarterstep.utils.SongPlayer;
 import com.daimajia.androidanimations.library.Techniques;
 import com.daimajia.androidanimations.library.YoYo;
@@ -63,6 +65,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         private TextView tvCaption;
         private TextView tvCharacteristics;
         private TextView tvSongName;
+        private ImageButton ibLike;
         private String songString;
         private SongPlayer songPlayer;
         private Song song;
@@ -76,12 +79,13 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
             tvCaption = itemView.findViewById(R.id.tvCaption);
             tvCharacteristics = itemView.findViewById(R.id.tvCharacteristics);
             tvSongName = itemView.findViewById(R.id.tvSongName);
+            ibLike = itemView.findViewById(R.id.ibLike);
         }
 
         public void bind(Post post) {
             tvUsername.setText("@" + post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
-            tvCharacteristics.setText(post.getCharacteristics());
+            tvCharacteristics.setText("Sounds like: " + post.getCharacteristics());
             tvSongName.setText(post.getName());
 
             // Parse string into Song object
@@ -105,6 +109,14 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
                             }
                         }
                     }).start();
+                }
+            });
+
+            ibLike.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Glide.with(context).load(R.drawable.favorite_filled).into(ibLike);
+                    YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibLike);
                 }
             });
 
