@@ -108,7 +108,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
         ibPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(8).playOn(ibPlay);
+                YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY * 2).repeat(6).playOn(ibPlay);
                 Song song = new Song(avNotes.getGrid());
                 songPlayer.addSong(song);
 
@@ -136,6 +136,7 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                         selectNote(note);
                     }
                 }
+                etSongName.setText("");
 
                 notesAdapter.notifyDataSetChanged();
                 wasSaved = false;
