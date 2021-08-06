@@ -39,8 +39,6 @@ import java.util.Date;
 public class SignupActivity extends AppCompatActivity {
 
     public static final String TAG = "SignupActivity";
-    public static final String KEY_FIRST = "firstName";
-    public static final String KEY_LAST = "lastName";
 
     private EditText etFirstName;
     private EditText etLastName;
@@ -79,6 +77,13 @@ public class SignupActivity extends AppCompatActivity {
                 String username = etUsername.getText().toString();
                 String password = etPassword.getText().toString();
                 String email = etEmail.getText().toString();
+
+                // Username length handling
+                if (username.length() > Constants.MAX_USERNAME_LENGTH) {
+                    Toast.makeText(SignupActivity.this, "Sorry, your username is too long.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
                 firebaseSignup(username, firstName, lastName, email, password);
             }
         });

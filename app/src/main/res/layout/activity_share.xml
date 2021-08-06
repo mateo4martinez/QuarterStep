@@ -61,52 +61,71 @@
         android:textSize="20dp"
         />
 
-    <EditText
-        android:id="@+id/etCharacteristics"
-        android:layout_width="220dp"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/counter1"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:counterEnabled="true"
+        app:counterMaxLength="40"
+        app:counterTextColor="@color/aqua"
+        app:counterOverflowTextColor="@color/red_active"
         android:layout_toEndOf="@+id/tvSoundsLike"
         android:layout_below="@+id/tvCreatedAt"
         android:layout_alignTop="@+id/tvSoundsLike"
         android:layout_marginStart="5dp"
-        android:background="@color/white"
-        android:gravity="start|top"
-        android:hint="Rock, Classical, ..."
-        android:minLines="2"
-        android:maxLines="2"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp"
-        android:textSize="20sp"
-        android:text=""
-        android:inputType="textMultiLine"
-        />
+        >
 
-    <EditText
-        android:id="@+id/etCaption"
+        <EditText
+            android:id="@+id/etCharacteristics"
+            android:layout_width="220dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="start|top"
+            android:hint="What genre?"
+            android:minLines="2"
+            android:maxLines="2"
+            android:text=""
+            android:inputType="textMultiLine"
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/counter2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/etCharacteristics"
+        app:counterEnabled="true"
+        app:counterMaxLength="100"
+        app:counterTextColor="@color/aqua"
+        app:counterOverflowTextColor="@color/red_active"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/counter1"
         android:layout_alignStart="@+id/tvSoundsLike"
-        android:layout_alignEnd="@+id/etCharacteristics"
-        android:layout_marginTop="20dp"
-        android:minLines="6"
-        android:maxLines="6"
-        android:background="@color/white"
-        android:gravity="start|top"
-        android:paddingStart="3dp"
-        android:paddingEnd="3dp"
-        android:inputType="textMultiLine"
-        android:hint="Write a caption..."
-        android:text=""
-        />
+        android:layout_alignEnd="@id/counter1"
+        >
+
+        <EditText
+            android:id="@+id/etCaption"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:minLines="6"
+            android:maxLines="6"
+            android:background="@color/white"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            android:hint="Write a caption..."
+            android:text=""
+            />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btnFavorite"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
-        android:layout_below="@+id/etCaption"
-        android:layout_alignStart="@+id/etCaption"
-        android:layout_alignEnd="@+id/etCaption"
+        android:layout_below="@+id/counter2"
+        android:layout_alignStart="@+id/counter2"
+        android:layout_alignEnd="@+id/counter2"
         android:layout_marginStart="50dp"
         android:layout_marginEnd="50dp"
         android:layout_marginTop="20dp"

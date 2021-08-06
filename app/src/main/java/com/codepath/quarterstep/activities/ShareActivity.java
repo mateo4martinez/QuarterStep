@@ -16,6 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.codepath.quarterstep.R;
@@ -130,16 +131,30 @@ public class ShareActivity extends AppCompatActivity {
             public void onClick(View v) {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(btnShare);
                 User user = Constants.currentUser;
-                String songName = etSongName.getText().toString(); // add length error handling here
+                String songName = etSongName.getText().toString();
+                String characteristics = etCharacteristics.getText().toString();
+                String caption = etCaption.getText().toString();
 
+                // Error handling
+                if (songName.length() > Constants.MAX_NAME_LENGTH) {
+                    Toast.makeText(ShareActivity.this, "Sorry, your song name is too long.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (characteristics.length() > Constants.MAX_GENRE_LENGTH) {
+                    Toast.makeText(ShareActivity.this, "Sorry, your genre description is too long.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                if (caption.length() > Constants.MAX_CAPTION_LENGTH) {
+                    Toast.makeText(ShareActivity.this, "Sorry, your caption is too long.", Toast.LENGTH_LONG).show();
+                    return;
+                }
+
+                // Check if name was changed or if song was not initially saved
                 if (!name.equals(songName) || !wasSaved) {
                     saveSongFirebase(user, songString, songName, isFavorite);
                 } else if (initialFavoriteStatus != isFavorite) {
                     updateSong(isFavorite);
                 }
-
-                String characteristics = etCharacteristics.getText().toString(); // add length error handling here
-                String caption = etCaption.getText().toString(); // and here too
 
                 savePostFirebase(user, songString, songName, caption, characteristics);
             }

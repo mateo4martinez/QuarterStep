@@ -149,9 +149,15 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
                 String songName = "";
-                if (etSongName.getText().toString().length() != 0) { // add length error handling here
+
+                if (etSongName.getText().toString().length() != 0) {
                     songName = etSongName.getText().toString();
+                    if (songName.length() > Constants.MAX_NAME_LENGTH) {
+                        Toast.makeText(getActivity(), "Sorry, your song name is too long.", Toast.LENGTH_LONG).show();
+                        return;
+                    }
                 }
+
                 intent.putExtra(Constants.NAME_KEY, songName);
                 intent.putExtra(Constants.SONG_KEY, songString);
                 intent.putExtra(Constants.SAVED_KEY, wasSaved);
@@ -167,8 +173,13 @@ public class ArrangementFragment extends ScreenSlidePageFragment {
                 YoYo.with(Techniques.Pulse).duration(Constants.NOTE_DELAY).playOn(ibSave);
                 Song song = new Song(avNotes.getGrid());
                 String songString = song.convertToParseString();
-                String songName = etSongName.getText().toString(); // add length error handling here
+                String songName = etSongName.getText().toString();
                 User user = Constants.currentUser;
+
+                if (songName.length() > Constants.MAX_NAME_LENGTH) {
+                    Toast.makeText(getActivity(), "Sorry, your song name is too long.", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
                 saveSong(user, songString, songName);
                 wasSaved = true;

@@ -25,6 +25,10 @@ public class Constants {
         public static final int NUM_COLS = NUM_BEATS + 1;
         public static final int IME_ACTION_DONE = EditorInfo.IME_ACTION_DONE;
         public static final int INPUT_TYPE_TEXT = InputType.TYPE_CLASS_TEXT;
+        public static final int MAX_NAME_LENGTH = 20;
+        public static final int MAX_GENRE_LENGTH = 40;
+        public static final int MAX_CAPTION_LENGTH = 100;
+        public static final int MAX_USERNAME_LENGTH = 20;
         public static final long NOTE_DELAY = 400;
 
     // Strings
