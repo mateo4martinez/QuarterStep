@@ -85,7 +85,7 @@ public class PostsAdapter extends RecyclerView.Adapter<PostsAdapter.ViewHolder> 
         public void bind(Post post) {
             tvUsername.setText("@" + post.getUser().getUsername());
             tvCaption.setText(post.getCaption());
-            tvCharacteristics.setText("Sounds like: " + post.getCharacteristics());
+            tvCharacteristics.setText("Genre: " + post.getCharacteristics());
             tvSongName.setText(post.getName());
 
             // Parse string into Song object
