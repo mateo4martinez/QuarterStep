@@ -84,7 +84,7 @@ public class ShareActivity extends AppCompatActivity {
         // User can click enter and be done with edit text field instead of creating a newline
         changeFieldOptions();
 
-        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
         date = dateFormat.format(currentTime);
         tvCreatedAt.setText(date);
 
